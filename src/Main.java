@@ -10,7 +10,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        Window window = new Window(800, 800);
+        Window window = new Window(1920, 1080);
         window.bombPlacer();
         window.numberPlacer();
         window.tileHider();

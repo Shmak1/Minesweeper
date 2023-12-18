@@ -1,16 +1,6 @@
 import java.awt.*;
 
 public enum ButtonCharacters {
-//    ONE("1", Color.CYAN),
-//    TWO("2", Color.GREEN),
-//    THREE("3", Color.RED),
-//    FOUR("4", Color.BLUE),
-//    FIVE("5", Color.PINK),
-//    SIX("6", Color.MAGENTA),
-//    SEVEN("7", Color.BLACK),
-//    EIGHT("8", Color.DARK_GRAY),
-//    FLAG("\uF04F", Color.WHITE),
-//    BOMB("\uF04D", Color.GRAY);
 
     ONE("1", Color.GRAY),
     TWO("2", Color.GRAY),

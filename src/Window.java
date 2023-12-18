@@ -12,9 +12,6 @@ public class Window{
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;
-    //private boolean isBomb = false;
-    //private boolean isClicked = false;
-    //private boolean isFlag = false;
     private int numberOfMines = 10;
     private int xCords = 9;
     private int yCords = 9;
@@ -38,7 +35,6 @@ public class Window{
                 buttons[x][y].setFont(new Font("Wingdings-Regular-Font.ttf", Font.BOLD, 14));
                 buttons[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                 buttons[x][y].setHorizontalTextPosition(SwingConstants.CENTER);
-                //buttons[x][y].addActionListener(this::buttonClicked);
             }
         }
     }
@@ -225,14 +221,23 @@ public class Window{
         this.frame.setSize(this.windowWidth, this.windowHeight);
         this.frame.setTitle("Minesweeper");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Container cp = this.frame.getContentPane();
-        cp.setLayout(new GridLayout(this.xCords, this.yCords));
+
+        JPanel mainPanel = new JPanel(new GridLayout(this.xCords, this.yCords));
 
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                cp.add(this.buttons[x][y]);
+                mainPanel.add(this.buttons[x][y]);
             }
         }
+
+        JPanel secondPanel = new JPanel();
+        secondPanel.setPreferredSize(new Dimension((this.xCords*50), 70));
+
+        Container cp = this.frame.getContentPane();
+        cp.setLayout(new BorderLayout());
+
+        cp.add(mainPanel, BorderLayout.CENTER);
+        cp.add(secondPanel, BorderLayout.NORTH);
 
         this.frame.pack();
         this.frame.setResizable(false);
@@ -240,10 +245,6 @@ public class Window{
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
     }
-
-    //public boolean getIsLost(){
-    //    return this.gameIsLost;
-    //}
 
     public void mouseListener() {
         for (int x = 0; x < this.xCords; x++) {
@@ -348,59 +349,4 @@ public class Window{
         lcWindow.setUpGUI();
     }
 
-//    public void buttonClicked(ActionEvent aE) {
-//        Object o = aE.getSource();
-//
-//        for (int x = 0; x < this.xCords; x++) {
-//            for (int y = 0; y < this.yCords; y++) {
-//                if (o == this.buttons[x][y]) {
-//                    if(this.buttons[x][y].getText().isEmpty()){
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("1")){
-//                        this.buttons[x][y].setForeground(Color.CYAN);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("2")){
-//                        this.buttons[x][y].setForeground(Color.GREEN);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("3")){
-//                        this.buttons[x][y].setForeground(Color.RED);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("4")){
-//                        this.buttons[x][y].setForeground(Color.BLUE);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("5")){
-//                        this.buttons[x][y].setForeground(Color.YELLOW);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("6")){
-//                        this.buttons[x][y].setForeground(Color.MAGENTA);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("7")){
-//                        this.buttons[x][y].setForeground(Color.BLACK);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("8")){
-//                        this.buttons[x][y].setForeground(Color.DARK_GRAY);
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                    }
-//                    if(this.buttons[x][y].getText().equals("\uF04D")){
-//                        this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//                        for (int xx = 0; xx < this.xCords; xx++) {
-//                            for (int yy = 0; yy < this.yCords; yy++) {
-//                                if(this.bombPlacement[xx][yy]){
-//                                    this.buttons[xx][yy].setForeground(Color.BLACK);
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 }
