@@ -1,27 +1,26 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class LoseConditionWindow{
+public class WinConditionWindow {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
     private JTextArea textArea;
     private boolean hasAlreadyBeenSetUp = false;
 
-    public LoseConditionWindow(int w, int h){
-        this.windowWidth = w;
-        this.windowHeight = h;
+    public WinConditionWindow(int w, int h){
+            this.windowWidth = w;
+            this.windowHeight = h;
     }
 
     public void setUpGUI() {
         frame = new JFrame();
         frame.setSize(this.windowWidth, this.windowHeight);
-        //TODO: DONE zmazat java ikonku v rohu
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setUndecorated(true);
         frame.setAlwaysOnTop(true);
 
-        textArea = new JTextArea("\n        You lost");
+        textArea = new JTextArea("\n        You won");
         textArea.setEditable(false);
         //textArea.setSize(this.windowWidth, this.windowHeight);
         textArea.setFocusable(false);

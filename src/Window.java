@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-//import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
@@ -16,6 +15,7 @@ public class Window{
     private int xCords = 9;
     private int yCords = 9;
     private boolean[][] bombPlacement;
+    private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsLost = false;
 
@@ -24,17 +24,19 @@ public class Window{
         this.windowWidth = w;
         this.windowHeight = h;
 
-        Dimension buttonSize = new Dimension(50, 50);
+        final Dimension buttonSize = new Dimension(50, 50);
 
         this.buttons = new JButton[this.xCords][this.yCords];
+        this.flagPlacement = new boolean[this.xCords][this.yCords];
 
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                buttons[x][y] = new JButton("");
-                buttons[x][y].setPreferredSize(buttonSize);
-                buttons[x][y].setFont(new Font("Wingdings-Regular-Font.ttf", Font.BOLD, 14));
-                buttons[x][y].setHorizontalAlignment(SwingConstants.CENTER);
-                buttons[x][y].setHorizontalTextPosition(SwingConstants.CENTER);
+                this.buttons[x][y] = new JButton("");
+                this.buttons[x][y].setPreferredSize(buttonSize);
+                this.buttons[x][y].setFont(new Font("Wingdings-Regular-Font.ttf", Font.BOLD, 14));
+                this.buttons[x][y].setHorizontalAlignment(SwingConstants.CENTER);
+                this.buttons[x][y].setHorizontalTextPosition(SwingConstants.CENTER);
+                this.flagPlacement[x][y] = false;
             }
         }
     }
@@ -81,7 +83,6 @@ public class Window{
                         //System.out.println("Error: " + a.getMessage());
                     }
 
-
                     try {
                         if (!this.buttons[x - 1][y].getText().equals("\uF04D")) {   //if the button does NOT contain a bomb
                             if (this.buttons[x - 1][y].getText().isEmpty()) {
@@ -96,7 +97,6 @@ public class Window{
                     } catch (ArrayIndexOutOfBoundsException b) {
                         //System.out.println("Error: " + b.getMessage());
                     }
-
 
                     try {
                         if (!this.buttons[x - 1][y + 1].getText().equals("\uF04D")) {
@@ -113,7 +113,6 @@ public class Window{
                         //System.out.println("Error: " + c.getMessage());
                     }
 
-
                     try {
                         if (!this.buttons[x][y - 1].getText().equals("\uF04D")) {
                             if (this.buttons[x][y - 1].getText().isEmpty()) {
@@ -128,7 +127,6 @@ public class Window{
                     } catch (ArrayIndexOutOfBoundsException d) {
                         //System.out.println("Error: " + d.getMessage());
                     }
-
 
                     try {
                         if (!this.buttons[x][y + 1].getText().equals("\uF04D")) {
@@ -145,7 +143,6 @@ public class Window{
                         //System.out.println("Error: " + e.getMessage());
                     }
 
-
                     try {
                         if (!this.buttons[x + 1][y - 1].getText().equals("\uF04D")) {
                             if (this.buttons[x + 1][y - 1].getText().isEmpty()) {
@@ -161,7 +158,6 @@ public class Window{
                         //System.out.println("Error: " + f.getMessage());
                     }
 
-
                     try {
                         if (!this.buttons[x + 1][y].getText().equals("\uF04D")) {
                             if (this.buttons[x + 1][y].getText().isEmpty()) {
@@ -176,7 +172,6 @@ public class Window{
                     } catch (ArrayIndexOutOfBoundsException g) {
                         //System.out.println("Error: " + g.getMessage());
                     }
-
 
                     try {
                         if (!this.buttons[x + 1][y + 1].getText().equals("\uF04D")) {
@@ -251,13 +246,16 @@ public class Window{
             for (int y = 0; y < this.yCords; y++) {
                 JButton button = this.buttons[x][y];
                 String characterPlacement = this.characterPlacement[x][y];
+                //boolean bombPlacement = this.bombPlacement[x][y];
+                //boolean flagPlacement = this.flagPlacement[x][y];
                 button.addMouseListener(new MouseAdapter() {
                     @Override
-                    public void mouseClicked(MouseEvent e) {
-                        if (SwingUtilities.isRightMouseButton(e) && gameIsLost == false) {
+                    public void mouseReleased(MouseEvent e) {
+                        if (SwingUtilities.isRightMouseButton(e) && !gameIsLost) {
                             if (!button.getText().equals("\uF04F")) {
                                 button.setText("\uF04F");
                                 button.setForeground(Color.WHITE);
+                                //flagPlacement = true;
                             }else {
                                 button.setText(characterPlacement);
 
@@ -284,7 +282,7 @@ public class Window{
                             }
                         }
 
-                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && gameIsLost == false) {
+                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsLost) {
                             if (button.getText().isEmpty()) {
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
@@ -325,8 +323,6 @@ public class Window{
                                 gameIsLost = true;
                                 setUpLCGUI();
 
-
-
                                 for (int xx = 0; xx < xCords; xx++) {
                                     for (int yy = 0; yy < yCords; yy++) {
                                         if (bombPlacement[xx][yy]) {
@@ -339,7 +335,6 @@ public class Window{
                         }
                     }
                 });
-
             }
         }
     }
@@ -347,6 +342,11 @@ public class Window{
     public void setUpLCGUI(){
         LoseConditionWindow lcWindow = new LoseConditionWindow(250, 105);
         lcWindow.setUpGUI();
+    }
+
+    public void setUpWCGUI(){
+        WinConditionWindow wcWindow = new WinConditionWindow(250, 105);
+        wcWindow.setUpGUI();
     }
 
 }

@@ -17,7 +17,5 @@ public class Main {
         window.characterArrayer();
         window.mouseListener();
         window.setUpGUI();
-
-
     }
 }
