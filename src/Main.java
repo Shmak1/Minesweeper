@@ -1,6 +1,6 @@
 //TODO: timer
 //      DONE right click capability with flags, make flags reversible
-//      win condition and win screen
+//      win condition //and win screen
 //      reset method with R key
 //      tile reveal algorithm
 //      DONE lose condition and end screen/window
@@ -10,12 +10,12 @@
 public class Main {
 
     public static void main(String[] args) {
-        Window window = new Window(1920, 1080);
-        window.bombPlacer();
-        window.numberPlacer();
-        window.tileHider();
-        window.characterArrayer();
-        window.mouseListener();
-        window.setUpGUI();
+        Window window = new Window(1920, 1080);//Vytvorenie okna
+        window.bombPlacer();//Polozenie bomb na hraciu plochu
+        window.numberPlacer();//Zapisanie cisel okolo bomb
+        window.tileHider();//Skrytie vsetkych znakov, kontrolna metoda
+        window.characterArrayer();//Ulozenie vsetkych znakov z tlacidiel do pola
+        window.mouseListener();//Citanie vstupov mysou
+        window.setUpGUI();//Nastavenie a zobrazenie okna
     }
 }
