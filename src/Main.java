@@ -6,7 +6,7 @@
 //      DONE lose condition and end screen/window
 //      best time text file
 //      flag counter
-//
+//      zrusit oramovanie textu v tlacidlach po pravom kliknuti a drzani left clicku
 public class Main {
 
     public static void main(String[] args) {

@@ -5,24 +5,22 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 
 
-
 public class Window{
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;
-    private int numberOfMines = 10;
-    private int xCords = 9;
-    private int yCords = 9;
+    private int numberOfMines = 5;
+    private int xCords = 9;//pocet tlacidiel na sirku
+    private int yCords = 9;//pocet tlacidiel na vysku
     private boolean[][] bombPlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsLost = false;
 
-
-    public Window(int w, int h) {
-        this.windowWidth = w;
-        this.windowHeight = h;
+    public Window(int width, int height) {
+        this.windowWidth = width;
+        this.windowHeight = height;
 
         final Dimension buttonSize = new Dimension(50, 50);
 
@@ -41,7 +39,7 @@ public class Window{
         }
     }
 
-    public void bombPlacer() {
+    public void bombPlacer() { //Metoda na nahodne rozmiestnenie min/bomb do JButtonov
         int randIntX;
         int randIntY;
         this.bombPlacement = new boolean[xCords][yCords];
@@ -61,7 +59,7 @@ public class Window{
         }
     }
 
-    public void numberPlacer() {
+    public void numberPlacer() { //Metoda na rozmiestnenie cisel do JButtonov okolo JButtonov obsahujucich znak bomby
         int buttonNumber;
         String buttonText;
 
@@ -245,17 +243,20 @@ public class Window{
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
                 JButton button = this.buttons[x][y];
+                int ax = x;
+                int ay = y;
                 String characterPlacement = this.characterPlacement[x][y];
                 //boolean bombPlacement = this.bombPlacement[x][y];
                 //boolean flagPlacement = this.flagPlacement[x][y];
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
+                        //boolean[][] flagPlacement = new boolean[9][9];
                         if (SwingUtilities.isRightMouseButton(e) && !gameIsLost) {
                             if (!button.getText().equals("\uF04F")) {
                                 button.setText("\uF04F");
                                 button.setForeground(Color.WHITE);
-                                //flagPlacement = true;
+                                //flagPlacement[][] = true;
                             }else {
                                 button.setText(characterPlacement);
 
@@ -284,7 +285,8 @@ public class Window{
 
                         if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsLost) {
                             if (button.getText().isEmpty()) {
-                                button.setBackground(Color.LIGHT_GRAY);
+                                //button.setBackground(Color.LIGHT_GRAY);
+                                tileRevealer(ax, ay);
                             }
                             if (button.getText().equals("1")) {
                                 button.setForeground(Color.CYAN);
@@ -321,7 +323,7 @@ public class Window{
                             if (button.getText().equals("\uF04D")) {
                                 button.setBackground(Color.LIGHT_GRAY);
                                 gameIsLost = true;
-                                setUpLCGUI();
+                                setUpLoseCGUI();
 
                                 for (int xx = 0; xx < xCords; xx++) {
                                     for (int yy = 0; yy < yCords; yy++) {
@@ -339,14 +341,80 @@ public class Window{
         }
     }
 
-    public void setUpLCGUI(){
-        LoseConditionWindow lcWindow = new LoseConditionWindow(250, 105);
-        lcWindow.setUpGUI();
+    public void setUpLoseCGUI(){
+        EndGameWindow loseWindow = new EndGameWindow(250, 105, "You lost");
+        loseWindow.setUpGUI();
     }
 
-    public void setUpWCGUI(){
-        WinConditionWindow wcWindow = new WinConditionWindow(250, 105);
-        wcWindow.setUpGUI();
+    public void setUpWinGUI(){
+        EndGameWindow winWindow = new EndGameWindow(250, 105, "You won");
+        winWindow.setUpGUI();
+
+        //WinConditionWindow wcWindow = new WinConditionWindow(250, 105,);
+        //wcWindow.setUpGUI();
     }
 
+    public void tileRevealer(int x, int y){
+        if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
+            try {
+                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x - 1, y - 1);
+            }catch (ArrayIndexOutOfBoundsException aa){
+                //System.out.println("Error: " + aa.getMessage);
+            }
+
+            try {
+                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x - 1, y);
+            }catch (ArrayIndexOutOfBoundsException bb){
+                //System.out.println("Error: " + bb.getMessage);
+            }
+
+            try {
+                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x - 1, y + 1);
+            }catch (ArrayIndexOutOfBoundsException cc){
+                //System.out.println("Error: " + cc.getMessage);
+            }
+
+            try {
+                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x, y - 1);
+            }catch (ArrayIndexOutOfBoundsException dd){
+                //System.out.println("Error: " + dd.getMessage);
+            }
+
+            buttons[x][y].setBackground(Color.LIGHT_GRAY);
+            ////////////////////////////
+
+            try {
+                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x, y + 1);
+            }catch (ArrayIndexOutOfBoundsException ee){
+                //System.out.println("Error: " + ee.getMessage);
+            }
+
+            try {
+                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x + 1, y - 1);
+            }catch (ArrayIndexOutOfBoundsException ff){
+                //System.out.println("Error: " + ff.getMessage);
+            }
+
+            try {
+                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x + 1, y);
+            }catch (ArrayIndexOutOfBoundsException gg){
+                //System.out.println("Error: " + gg.getMessage);
+            }
+
+            try {
+                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.tileRevealer(x + 1, y + 1);
+            }catch (ArrayIndexOutOfBoundsException hh){
+                //System.out.println("Error: " + hh.getMessage);
+            }
+
+        }
+    }
 }
