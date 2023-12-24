@@ -10,9 +10,9 @@ public class Window{
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;
-    private int numberOfMines = 5;
-    private int xCords = 9;//pocet tlacidiel na sirku
-    private int yCords = 9;//pocet tlacidiel na vysku
+    private int numberOfMines = 15;
+    private int xCords = 15;//pocet tlacidiel na sirku
+    private int yCords = 15;//pocet tlacidiel na vysku
     private boolean[][] bombPlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
@@ -284,7 +284,7 @@ public class Window{
                         }
 
                         if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsLost) {
-                            if (button.getText().isEmpty()) {
+                            if (button.getText().isEmpty()) {//TODO: zmenit na switch
                                 //button.setBackground(Color.LIGHT_GRAY);
                                 tileRevealer(ax, ay);
                             }
@@ -357,29 +357,29 @@ public class Window{
     public void tileRevealer(int x, int y){
         if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
             try {
-                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x - 1, y - 1);
+                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException aa){
                 //System.out.println("Error: " + aa.getMessage);
             }
 
             try {
-                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x - 1, y);
+                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException bb){
                 //System.out.println("Error: " + bb.getMessage);
             }
 
             try {
-                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x - 1, y + 1);
+                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException cc){
                 //System.out.println("Error: " + cc.getMessage);
             }
 
             try {
-                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x, y - 1);
+                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException dd){
                 //System.out.println("Error: " + dd.getMessage);
             }
@@ -388,32 +388,142 @@ public class Window{
             ////////////////////////////
 
             try {
-                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x, y + 1);
+                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException ee){
                 //System.out.println("Error: " + ee.getMessage);
             }
 
             try {
-                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x + 1, y - 1);
+                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException ff){
                 //System.out.println("Error: " + ff.getMessage);
             }
 
             try {
-                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x + 1, y);
+                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException gg){
                 //System.out.println("Error: " + gg.getMessage);
             }
 
             try {
-                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
                 this.tileRevealer(x + 1, y + 1);
+                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
             }catch (ArrayIndexOutOfBoundsException hh){
                 //System.out.println("Error: " + hh.getMessage);
             }
+
+//            try {
+//                this.tileRevealer(x - 2, y - 2);
+//                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException aa){
+//                //System.out.println("Error: " + aa.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x - 2, y);
+//                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException bb){
+//                //System.out.println("Error: " + bb.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x - 2, y + 2);
+//                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException cc){
+//                //System.out.println("Error: " + cc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x, y - 2);
+//                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException dd){
+//                //System.out.println("Error: " + dd.getMessage);
+//            }
+//
+//            buttons[x][y].setBackground(Color.LIGHT_GRAY);
+//            ////////////////////////////
+//
+//            try {
+//                this.tileRevealer(x, y + 2);
+//                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException ee){
+//                //System.out.println("Error: " + ee.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y - 2);
+//                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException ff){
+//                //System.out.println("Error: " + ff.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y);
+//                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException gg){
+//                //System.out.println("Error: " + gg.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y + 2);
+//                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
+//            }catch (ArrayIndexOutOfBoundsException hh){
+//                //System.out.println("Error: " + hh.getMessage);
+//            }
+
+
+
+
+//            try {
+//                this.tileRevealer(x + 2, y - 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y + 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x - 2, y + 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x - 2, y - 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y + 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y - 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x - 2, y - 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
+//
+//            try {
+//                this.tileRevealer(x + 2, y + 1);
+//            }catch (ArrayIndexOutOfBoundsException abc){
+//                //System.out.println("Error: " + abc.getMessage);
+//            }
 
         }
     }
