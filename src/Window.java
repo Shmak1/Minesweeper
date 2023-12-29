@@ -10,17 +10,20 @@ public class Window{
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;
-    private int numberOfMines = 15;
-    private int xCords = 15;//pocet tlacidiel na sirku
-    private int yCords = 15;//pocet tlacidiel na vysku
+    private int numberOfMines;
+    private int xCords;//pocet tlacidiel na vysku
+    private int yCords;//pocet tlacidiel na sirku
     private boolean[][] bombPlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsLost = false;
 
-    public Window(int width, int height) {
+    public Window(int width, int height, int xCords, int yCords, int numberOfMines) {
         this.windowWidth = width;
         this.windowHeight = height;
+        this.xCords = xCords;
+        this.yCords = yCords;
+        this.numberOfMines = numberOfMines;
 
         final Dimension buttonSize = new Dimension(50, 50);
 
@@ -31,6 +34,7 @@ public class Window{
             for (int y = 0; y < this.yCords; y++) {
                 this.buttons[x][y] = new JButton("");
                 this.buttons[x][y].setPreferredSize(buttonSize);
+                this.buttons[x][y].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
                 this.buttons[x][y].setFont(new Font("Wingdings-Regular-Font.ttf", Font.BOLD, 14));
                 this.buttons[x][y].setHorizontalAlignment(SwingConstants.CENTER);
                 this.buttons[x][y].setHorizontalTextPosition(SwingConstants.CENTER);
@@ -257,7 +261,7 @@ public class Window{
                                 button.setText("\uF04F");
                                 button.setForeground(Color.WHITE);
                                 //flagPlacement[][] = true;
-                            }else {
+                            }else if(!button.getBackground().equals(Color.GRAY)){
                                 button.setText(characterPlacement);
 
                                 switch(characterPlacement){
@@ -280,47 +284,50 @@ public class Window{
                                     case "\uF04D": button.setForeground(ButtonCharacters.BOMB.getColor());
                                         break;
                                 }
+
+                            }else {
+                                button.setText(characterPlacement);
+                                button.setForeground(Color.GRAY);
                             }
                         }
 
                         if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsLost) {
-                            if (button.getText().isEmpty()) {//TODO: zmenit na switch
-                                //button.setBackground(Color.LIGHT_GRAY);
+                            if (button.getText().isEmpty()) {//FIXME: zmenit na switch
                                 tileRevealer(ax, ay);
                             }
-                            if (button.getText().equals("1")) {
-                                button.setForeground(Color.CYAN);
+                            if (characterPlacement.equals("1")) {
+                                button.setForeground(ButtonCharacters.ONE.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("2")) {
-                                button.setForeground(Color.GREEN);
+                            if (characterPlacement.equals("2")) {
+                                button.setForeground(ButtonCharacters.TWO.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("3")) {
-                                button.setForeground(Color.RED);
+                            if (characterPlacement.equals("3")) {
+                                button.setForeground(ButtonCharacters.THREE.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("4")) {
-                                button.setForeground(Color.BLUE);
+                            if (characterPlacement.equals("4")) {
+                                button.setForeground(ButtonCharacters.FOUR.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("5")) {
-                                button.setForeground(Color.PINK);
+                            if (characterPlacement.equals("5")) {
+                                button.setForeground(ButtonCharacters.FIVE.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("6")) {
-                                button.setForeground(Color.MAGENTA);
+                            if (characterPlacement.equals("6")) {
+                                button.setForeground(ButtonCharacters.SIX.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("7")) {
-                                button.setForeground(Color.BLACK);
+                            if (characterPlacement.equals("7")) {
+                                button.setForeground(ButtonCharacters.SEVEN.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("8")) {
-                                button.setForeground(Color.DARK_GRAY);
+                            if (characterPlacement.equals("8")) {
+                                button.setForeground(ButtonCharacters.EIGHT.getColor());
                                 button.setBackground(Color.LIGHT_GRAY);
                             }
-                            if (button.getText().equals("\uF04D")) {
+                            if (characterPlacement.equals("\uF04D")) {
                                 button.setBackground(Color.LIGHT_GRAY);
                                 gameIsLost = true;
                                 setUpLoseCGUI();
@@ -349,9 +356,6 @@ public class Window{
     public void setUpWinGUI(){
         EndGameWindow winWindow = new EndGameWindow(250, 105, "You won");
         winWindow.setUpGUI();
-
-        //WinConditionWindow wcWindow = new WinConditionWindow(250, 105,);
-        //wcWindow.setUpGUI();
     }
 
     public void tileRevealer(int x, int y){
@@ -414,117 +418,6 @@ public class Window{
             }catch (ArrayIndexOutOfBoundsException hh){
                 //System.out.println("Error: " + hh.getMessage);
             }
-
-//            try {
-//                this.tileRevealer(x - 2, y - 2);
-//                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException aa){
-//                //System.out.println("Error: " + aa.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x - 2, y);
-//                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException bb){
-//                //System.out.println("Error: " + bb.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x - 2, y + 2);
-//                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException cc){
-//                //System.out.println("Error: " + cc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x, y - 2);
-//                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException dd){
-//                //System.out.println("Error: " + dd.getMessage);
-//            }
-//
-//            buttons[x][y].setBackground(Color.LIGHT_GRAY);
-//            ////////////////////////////
-//
-//            try {
-//                this.tileRevealer(x, y + 2);
-//                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException ee){
-//                //System.out.println("Error: " + ee.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y - 2);
-//                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException ff){
-//                //System.out.println("Error: " + ff.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y);
-//                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException gg){
-//                //System.out.println("Error: " + gg.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y + 2);
-//                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
-//            }catch (ArrayIndexOutOfBoundsException hh){
-//                //System.out.println("Error: " + hh.getMessage);
-//            }
-
-
-
-
-//            try {
-//                this.tileRevealer(x + 2, y - 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y + 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x - 2, y + 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x - 2, y - 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y + 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y - 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x - 2, y - 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-//
-//            try {
-//                this.tileRevealer(x + 2, y + 1);
-//            }catch (ArrayIndexOutOfBoundsException abc){
-//                //System.out.println("Error: " + abc.getMessage);
-//            }
-
         }
     }
 }

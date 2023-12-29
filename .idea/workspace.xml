@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="trying to make win condition work">
+    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="tile reveal algorithm is fully functional now">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ButtonCharacters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ButtonCharacters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +68,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;vcs.Git&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -147,7 +149,9 @@
       <workItem from="1703285122296" duration="4959000" />
       <workItem from="1703371489693" duration="4265000" />
       <workItem from="1703424571001" duration="3377000" />
-      <workItem from="1703456988960" duration="1214000" />
+      <workItem from="1703456988960" duration="3350000" />
+      <workItem from="1703545931352" duration="3204000" />
+      <workItem from="1703881232573" duration="2162000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />
@@ -189,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703299580826</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="tile reveal algorithm is fully functional now">
+      <option name="closed" value="true" />
+      <created>1703461563066</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1703461563066</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,7 +227,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame." />
     <MESSAGE value="trying to make win condition work" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to make win condition work" />
+    <MESSAGE value="tile reveal algorithm is fully functional now" />
+    <option name="LAST_COMMIT_MESSAGE" value="tile reveal algorithm is fully functional now" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Main_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1700464728779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
