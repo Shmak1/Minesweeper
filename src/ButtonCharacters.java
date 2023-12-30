@@ -2,16 +2,19 @@ import java.awt.*;
 
 public enum ButtonCharacters {
 
-    ONE("1", Color.CYAN),
-    TWO("2", Color.GREEN),
-    THREE("3", Color.RED),
-    FOUR("4", Color.BLUE),
-    FIVE("5", Color.PINK),
-    SIX("6", Color.MAGENTA),
-    SEVEN("7", Color.BLACK),
-    EIGHT("8", Color.DARK_GRAY),
-    FLAG("\uF04F", Color.GRAY),
-    BOMB("\uF04D", Color.GRAY);
+    EMPTY("", Color.WHITE),
+    BACKGROUND("", Color.decode("#7B7B7B")),
+    FOREGROUND("", Color.decode("#7B7B7B")),
+    ONE("1", Color.decode("#0000FF")),
+    TWO("2", Color.decode("#007B00")),
+    THREE("3", Color.decode("#FF0000")),
+    FOUR("4", Color.decode("#00007B")),
+    FIVE("5", Color.decode("#7B0000")),
+    SIX("6", Color.decode("#007B7B")),
+    SEVEN("7", Color.decode("#000000")),
+    EIGHT("8", Color.decode("#7B7B7B")),
+    FLAG("\uF04F", Color.decode("#080808")),
+    BOMB("\uF04D", Color.decode("#0000FF"));
 
     private String character;
     private Color color;
@@ -20,6 +23,23 @@ public enum ButtonCharacters {
         this.character = character;
         this.color = color;
     }
+
+//    public String getCharacterKeyWord(){
+//        switch (this.character){
+//            case "": return "EMPTY";
+//            case "1": return "ONE";
+//            case "2": return "TWO";
+//            case "3": return "THREE";
+//            case "4": return "FOUR";
+//            case "5": return "FIVE";
+//            case "6": return "SIX";
+//            case "7": return "SEVEN";
+//            case "8": return "EIGHT";
+//            case "\uF04F": return "FLAG";
+//            case "\uF04D": return "BOMB";
+//            default: return "";
+//        }
+//    }
 
     public String getCharacter(){
         return this.character;

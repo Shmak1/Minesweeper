@@ -1,6 +1,6 @@
 //TODO: timer
-//      DONE right click capability with flags, make flags reversible
-//      win condition //and win screen
+//      DONE right click capability with flags, DONE make flags reversible
+//      DONE win condition DONE and win screen
 //      reset method with R key
 //      DONE tile reveal algorithm
 //      DONE lose condition and end screen/window

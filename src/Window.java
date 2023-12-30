@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -9,14 +10,14 @@ public class Window{
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
-    private JButton[][] buttons;
+    private JButton[][] buttons;//[0][0] je v lavom hornom rohu
     private int numberOfMines;
     private int xCords;//pocet tlacidiel na vysku
     private int yCords;//pocet tlacidiel na sirku
     private boolean[][] bombPlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
-    private boolean gameIsLost = false;
+    private boolean gameIsFinished = false;
 
     public Window(int width, int height, int xCords, int yCords, int numberOfMines) {
         this.windowWidth = width;
@@ -197,8 +198,8 @@ public class Window{
     public void tileHider() {
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                this.buttons[x][y].setForeground(Color.GRAY);//
-                this.buttons[x][y].setBackground(Color.GRAY);//defaultne menit farbu
+                this.buttons[x][y].setForeground(ButtonCharacters.FOREGROUND.getColor());//
+                this.buttons[x][y].setBackground(ButtonCharacters.BACKGROUND.getColor());//defaultne menit farbu
                 this.buttons[x][y].setFocusPainted(false);
             }
         }
@@ -250,19 +251,25 @@ public class Window{
                 int ax = x;
                 int ay = y;
                 String characterPlacement = this.characterPlacement[x][y];
-                //boolean bombPlacement = this.bombPlacement[x][y];
-                //boolean flagPlacement = this.flagPlacement[x][y];
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        //boolean[][] flagPlacement = new boolean[9][9];
-                        if (SwingUtilities.isRightMouseButton(e) && !gameIsLost) {
-                            if (!button.getText().equals("\uF04F")) {
-                                button.setText("\uF04F");
-                                button.setForeground(Color.WHITE);
-                                //flagPlacement[][] = true;
-                            }else if(!button.getBackground().equals(Color.GRAY)){
+                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {
+                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {
+                                button.setText(ButtonCharacters.FLAG.getCharacter());
+                                button.setForeground(ButtonCharacters.FLAG.getColor());
+
+                                flagPlacement[ax][ay] = true;
+
+                                if (Arrays.deepEquals(flagPlacement, bombPlacement)){
+                                    setUpWinGUI();
+                                    gameIsFinished = true;
+                                }
+
+                            }else if(!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())){
                                 button.setText(characterPlacement);
+
+                                flagPlacement[ax][ay] = false;
 
                                 switch(characterPlacement){
                                     case "1": button.setForeground(ButtonCharacters.ONE.getColor());
@@ -284,61 +291,54 @@ public class Window{
                                     case "\uF04D": button.setForeground(ButtonCharacters.BOMB.getColor());
                                         break;
                                 }
-
                             }else {
                                 button.setText(characterPlacement);
-                                button.setForeground(Color.GRAY);
+                                button.setForeground(ButtonCharacters.FOREGROUND.getColor());
                             }
                         }
 
-                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsLost) {
-                            if (button.getText().isEmpty()) {//FIXME: zmenit na switch
+                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) {
+                            if (button.getText().isEmpty()) {
                                 tileRevealer(ax, ay);
-                            }
-                            if (characterPlacement.equals("1")) {
-                                button.setForeground(ButtonCharacters.ONE.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("2")) {
-                                button.setForeground(ButtonCharacters.TWO.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("3")) {
-                                button.setForeground(ButtonCharacters.THREE.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("4")) {
-                                button.setForeground(ButtonCharacters.FOUR.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("5")) {
-                                button.setForeground(ButtonCharacters.FIVE.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("6")) {
-                                button.setForeground(ButtonCharacters.SIX.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("7")) {
-                                button.setForeground(ButtonCharacters.SEVEN.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("8")) {
-                                button.setForeground(ButtonCharacters.EIGHT.getColor());
-                                button.setBackground(Color.LIGHT_GRAY);
-                            }
-                            if (characterPlacement.equals("\uF04D")) {
-                                button.setBackground(Color.LIGHT_GRAY);
-                                gameIsLost = true;
-                                setUpLoseCGUI();
+                            }else{
+                                switch (characterPlacement){
+                                    case "1":   button.setForeground(ButtonCharacters.ONE.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "2":   button.setForeground(ButtonCharacters.TWO.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "3":   button.setForeground(ButtonCharacters.THREE.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "4":   button.setForeground(ButtonCharacters.FOUR.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "5":   button.setForeground(ButtonCharacters.FIVE.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "6":   button.setForeground(ButtonCharacters.SIX.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "7":   button.setForeground(ButtonCharacters.SEVEN.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "8":   button.setForeground(ButtonCharacters.EIGHT.getColor());
+                                                button.setBackground(Color.LIGHT_GRAY);
+                                        break;
+                                    case "\uF04D":  button.setBackground(Color.LIGHT_GRAY);
+                                                    gameIsFinished = true;
+                                                    setUpLoseCGUI();
 
-                                for (int xx = 0; xx < xCords; xx++) {
-                                    for (int yy = 0; yy < yCords; yy++) {
-                                        if (bombPlacement[xx][yy]) {
-                                            buttons[xx][yy].setForeground(Color.BLACK);
-                                            buttons[xx][yy].setBackground(Color.LIGHT_GRAY);
-                                        }
-                                    }
+                                                    for (int xx = 0; xx < xCords; xx++) {
+                                                        for (int yy = 0; yy < yCords; yy++) {
+                                                            if (bombPlacement[xx][yy]) {
+                                                                buttons[xx][yy].setForeground(Color.BLACK);
+                                                                buttons[xx][yy].setBackground(Color.LIGHT_GRAY);
+                                                            }
+                                                        }
+                                                    }
+                                        break;
                                 }
                             }
                         }
@@ -362,59 +362,213 @@ public class Window{
         if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
             try {
                 this.tileRevealer(x - 1, y - 1);
-                buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                switch (this.buttons[x - 1][y - 1].getText()){
+                    case "1": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
+
             }catch (ArrayIndexOutOfBoundsException aa){
                 //System.out.println("Error: " + aa.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y);
-                buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x - 1][y]){
+                    case "1": this.buttons[x - 1][y].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x - 1][y].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x - 1][y].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x - 1][y].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x - 1][y].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x - 1][y].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x - 1][y].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x - 1][y].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException bb){
                 //System.out.println("Error: " + bb.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y + 1);
-                buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x - 1][y + 1]){
+                    case "1": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException cc){
                 //System.out.println("Error: " + cc.getMessage);
             }
 
             try {
                 this.tileRevealer(x, y - 1);
-                buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x][y - 1]){
+                    case "1": this.buttons[x][y - 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x][y - 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x][y - 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x][y - 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x][y - 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x][y - 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x][y - 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x][y - 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException dd){
                 //System.out.println("Error: " + dd.getMessage);
             }
 
-            buttons[x][y].setBackground(Color.LIGHT_GRAY);
-            ////////////////////////////
+            this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
+            ///////////////////////////////////////////////////
 
             try {
                 this.tileRevealer(x, y + 1);
-                buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x][y + 1]){
+                    case "1": this.buttons[x][y + 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x][y + 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x][y + 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x][y + 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x][y + 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x][y + 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x][y + 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x][y + 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException ee){
                 //System.out.println("Error: " + ee.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y - 1);
-                buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x + 1][y - 1]){
+                    case "1": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException ff){
                 //System.out.println("Error: " + ff.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y);
-                buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x + 1][y]){
+                    case "1": this.buttons[x + 1][y].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x + 1][y].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x + 1][y].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x + 1][y].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x + 1][y].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x + 1][y].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x + 1][y].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x + 1][y].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException gg){
                 //System.out.println("Error: " + gg.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y + 1);
-                buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                this.buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
+                switch (characterPlacement[x + 1][y + 1]){
+                    //case "": break;
+                    case "1": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
+                        break;
+                    case "2": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
+                        break;
+                    case "3": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.THREE.getColor());
+                        break;
+                    case "4": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.FOUR.getColor());
+                        break;
+                    case "5": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.FIVE.getColor());
+                        break;
+                    case "6": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.SIX.getColor());
+                        break;
+                    case "7": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.SEVEN.getColor());
+                        break;
+                    case "8": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.EIGHT.getColor());
+                        break;
+                    default: break;
+                }
             }catch (ArrayIndexOutOfBoundsException hh){
                 //System.out.println("Error: " + hh.getMessage);
             }
