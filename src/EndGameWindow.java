@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class EndGameWindow {
     private int windowWidth;
@@ -16,26 +18,26 @@ public class EndGameWindow {
     }
 
     public void setUpGUI() {
-        frame = new JFrame();
-        frame.setSize(this.windowWidth, this.windowHeight);
+        this.frame = new JFrame();
+        this.frame.setSize(this.windowWidth, this.windowHeight);
         //TODO: DONE zmazat java ikonku v rohu
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setUndecorated(true);
-        frame.setAlwaysOnTop(true);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setUndecorated(true);
+        this.frame.setAlwaysOnTop(true);
 
-        //textArea = new JTextArea("\n        You lost");
-        textArea = new JTextArea("\n        " + this.windowText);
-        textArea.setEditable(false);
-        //textArea.setSize(this.windowWidth, this.windowHeight);
-        textArea.setFocusable(false);
-        textArea.setFont(new Font("Arial", Font.BOLD, 30));
+        //this.textArea = new JTextArea("\n        You lost");
+        this.textArea = new JTextArea("\n        " + this.windowText);
+        this.textArea.setEditable(false);
+        //this.textArea.setSize(this.windowWidth, this.windowHeight);
+        this.textArea.setFocusable(false);
+        this.textArea.setFont(new Font("Arial", Font.BOLD, 30));
 
-        frame.add(textArea);
+        this.frame.add(textArea);
 
-        //frame.pack();
-        frame.setResizable(false);
-        //frame.validate();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        //this.frame.pack();
+        this.frame.setResizable(false);
+        //this.frame.validate();
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setVisible(true);
     }
 }

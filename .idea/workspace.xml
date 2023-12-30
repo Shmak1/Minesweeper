@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="optimisations">
+    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="win condition fully functional">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ButtonCharacters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ButtonCharacters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EndGameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EndGameWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
     </list>
@@ -151,7 +151,9 @@
       <workItem from="1703424571001" duration="3377000" />
       <workItem from="1703456988960" duration="3350000" />
       <workItem from="1703545931352" duration="3204000" />
-      <workItem from="1703881232573" duration="13038000" />
+      <workItem from="1703881232573" duration="13877000" />
+      <workItem from="1703963979255" duration="1247000" />
+      <workItem from="1703966053917" duration="3701000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />
@@ -209,7 +211,15 @@
       <option name="project" value="LOCAL" />
       <updated>1703883465851</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="win condition fully functional">
+      <option name="closed" value="true" />
+      <created>1703899049343</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1703899049343</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -237,7 +247,8 @@
     <MESSAGE value="trying to make win condition work" />
     <MESSAGE value="tile reveal algorithm is fully functional now" />
     <MESSAGE value="optimisations" />
-    <option name="LAST_COMMIT_MESSAGE" value="optimisations" />
+    <MESSAGE value="win condition fully functional" />
+    <option name="LAST_COMMIT_MESSAGE" value="win condition fully functional" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Main_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1700464728779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

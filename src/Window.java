@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,7 +12,9 @@ public class Window{
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;//[0][0] je v lavom hornom rohu
+    private JTextArea textArea;
     private int numberOfMines;
+    private int numberOfRemainingMines;
     private int xCords;//pocet tlacidiel na vysku
     private int yCords;//pocet tlacidiel na sirku
     private boolean[][] bombPlacement;
@@ -25,6 +28,7 @@ public class Window{
         this.xCords = xCords;
         this.yCords = yCords;
         this.numberOfMines = numberOfMines;
+        this.numberOfRemainingMines = this.numberOfMines;
 
         final Dimension buttonSize = new Dimension(50, 50);
 
@@ -230,6 +234,7 @@ public class Window{
 
         JPanel secondPanel = new JPanel();
         secondPanel.setPreferredSize(new Dimension((this.xCords*50), 70));
+        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
 
         Container cp = this.frame.getContentPane();
         cp.setLayout(new BorderLayout());
@@ -237,11 +242,31 @@ public class Window{
         cp.add(mainPanel, BorderLayout.CENTER);
         cp.add(secondPanel, BorderLayout.NORTH);
 
+        this.textArea = new JTextArea(String.valueOf(this.numberOfRemainingMines));
+        this.textArea.setEditable(false);
+        this.textArea.setFocusable(false);
+        this.textArea.setFont(new Font("Arial", Font.BOLD, 30));
+        this.textArea.setBackground(secondPanel.getBackground());
+        Border emptyBorder = BorderFactory.createEmptyBorder(17, 25, 0, 0);
+        this.textArea.setBorder(emptyBorder);
+        //secondPanel.add(Box.createVerticalStrut(15));
+        secondPanel.add(this.textArea);
+
         this.frame.pack();
         this.frame.setResizable(false);
         //this.frame.validate();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
+    }
+
+    public void updateMineCounter(boolean plusOrMinus) {
+        if (plusOrMinus) {
+            this.numberOfRemainingMines ++;
+            textArea.setText(String.valueOf(this.numberOfRemainingMines));
+        }else {
+            this.numberOfRemainingMines --;
+            textArea.setText(String.valueOf(this.numberOfRemainingMines));
+        }
     }
 
     public void mouseListener() {
@@ -254,10 +279,12 @@ public class Window{
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {
-                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {
+                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {//right click
+                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {//right click when there is no flag placed
                                 button.setText(ButtonCharacters.FLAG.getCharacter());
                                 button.setForeground(ButtonCharacters.FLAG.getColor());
+
+                                updateMineCounter(false);
 
                                 flagPlacement[ax][ay] = true;
 
@@ -266,34 +293,37 @@ public class Window{
                                     gameIsFinished = true;
                                 }
 
-                            }else if(!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())){
+                            }else if(!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())){//right click when there is already a flag, but there is a character under it
                                 button.setText(characterPlacement);
+
+                                updateMineCounter(true);
 
                                 flagPlacement[ax][ay] = false;
 
-                                switch(characterPlacement){
-                                    case "1": button.setForeground(ButtonCharacters.ONE.getColor());
-                                        break;
-                                    case "2": button.setForeground(ButtonCharacters.TWO.getColor());
-                                        break;
-                                    case "3": button.setForeground(ButtonCharacters.THREE.getColor());
-                                        break;
-                                    case "4": button.setForeground(ButtonCharacters.FOUR.getColor());
-                                        break;
-                                    case "5": button.setForeground(ButtonCharacters.FIVE.getColor());
-                                        break;
-                                    case "6": button.setForeground(ButtonCharacters.SIX.getColor());
-                                        break;
-                                    case "7": button.setForeground(ButtonCharacters.SEVEN.getColor());
-                                        break;
-                                    case "8": button.setForeground(ButtonCharacters.EIGHT.getColor());
-                                        break;
-                                    case "\uF04D": button.setForeground(ButtonCharacters.BOMB.getColor());
-                                        break;
-                                }
+//                                switch(characterPlacement){//VERY POSSIBLY REDUNDANT CODE
+//                                    case "1": button.setForeground(ButtonCharacters.ONE.getColor());
+//                                        break;
+//                                    case "2": button.setForeground(ButtonCharacters.TWO.getColor());
+//                                        break;
+//                                    case "3": button.setForeground(ButtonCharacters.THREE.getColor());
+//                                        break;
+//                                    case "4": button.setForeground(ButtonCharacters.FOUR.getColor());
+//                                        break;
+//                                    case "5": button.setForeground(ButtonCharacters.FIVE.getColor());
+//                                        break;
+//                                    case "6": button.setForeground(ButtonCharacters.SIX.getColor());
+//                                        break;
+//                                    case "7": button.setForeground(ButtonCharacters.SEVEN.getColor());
+//                                        break;
+//                                    case "8": button.setForeground(ButtonCharacters.EIGHT.getColor());
+//                                        break;
+//                                    case "\uF04D": button.setForeground(ButtonCharacters.BOMB.getColor());
+//                                        break;
+//                                }
                             }else {
                                 button.setText(characterPlacement);
                                 button.setForeground(ButtonCharacters.FOREGROUND.getColor());
+                                updateMineCounter(true);
                             }
                         }
 

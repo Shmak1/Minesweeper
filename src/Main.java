@@ -1,12 +1,9 @@
 //TODO: timer
-//      DONE right click capability with flags, DONE make flags reversible
-//      DONE win condition DONE and win screen
 //      reset method with R key
-//      DONE tile reveal algorithm
-//      DONE lose condition and end screen/window
 //      best time text file
-//      flag counter
 //      zrusit oramovanie textu v tlacidlach po pravom kliknuti a drzani left clicku
+
+//FIXME: if there is already a flag on an empty tile or a number the tileRevealer() method shits itself
 public class Main {
 
     public static void main(String[] args) {
