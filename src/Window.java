@@ -294,9 +294,11 @@ public class Window{
                                 }
 
                             }else if(!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())){//right click when there is already a flag, but there is a character under it
-                                button.setText(characterPlacement);
+                                if (button.getText().equals("\uF04F")) {
+                                    updateMineCounter(true);
+                                }
 
-                                updateMineCounter(true);
+                                button.setText(characterPlacement);
 
                                 flagPlacement[ax][ay] = false;
 
