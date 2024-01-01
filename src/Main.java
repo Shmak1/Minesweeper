@@ -1,9 +1,6 @@
-//TODO: timer
-//      reset method with R key
+//TODO: FIX reset method with R key
 //      best time text file
-//      zrusit oramovanie textu v tlacidlach po pravom kliknuti a drzani left clicku
 
-//FIXME: if there is already a flag on an empty tile or a number the tileRevealer() method shits itself
 public class Main {
 
     public static void main(String[] args) {
@@ -13,6 +10,8 @@ public class Main {
         window.tileHider();//Skrytie vsetkych znakov, kontrolna metoda
         window.characterArrayer();//Ulozenie vsetkych znakov z tlacidiel do pola
         window.mouseListener();//Citanie vstupov mysou
+
         window.setUpGUI();//Nastavenie a zobrazenie okna
+        window.keyboardListener();
     }
 }

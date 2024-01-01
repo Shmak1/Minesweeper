@@ -1,8 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -12,7 +11,9 @@ public class Window{
     private int windowHeight;
     private JFrame frame;
     private JButton[][] buttons;//[0][0] je v lavom hornom rohu
-    private JTextArea textArea;
+    private JTextArea mineCounterTextArea;
+    private JTextArea timerTextArea;
+    private Timer timer;
     private int numberOfMines;
     private int numberOfRemainingMines;
     private int xCords;//pocet tlacidiel na vysku
@@ -21,6 +22,7 @@ public class Window{
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsFinished = false;
+    private boolean timerHasBeenStarted = false;
 
     public Window(int width, int height, int xCords, int yCords, int numberOfMines) {
         this.windowWidth = width;
@@ -233,8 +235,8 @@ public class Window{
         }
 
         JPanel secondPanel = new JPanel();
-        secondPanel.setPreferredSize(new Dimension((this.xCords*50), 70));
-        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
+        secondPanel.setPreferredSize(new Dimension((this.xCords * 50), 70));
+        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.X_AXIS));
 
         Container cp = this.frame.getContentPane();
         cp.setLayout(new BorderLayout());
@@ -242,15 +244,23 @@ public class Window{
         cp.add(mainPanel, BorderLayout.CENTER);
         cp.add(secondPanel, BorderLayout.NORTH);
 
-        this.textArea = new JTextArea(String.valueOf(this.numberOfRemainingMines));
-        this.textArea.setEditable(false);
-        this.textArea.setFocusable(false);
-        this.textArea.setFont(new Font("Arial", Font.BOLD, 30));
-        this.textArea.setBackground(secondPanel.getBackground());
-        Border emptyBorder = BorderFactory.createEmptyBorder(17, 25, 0, 0);
-        this.textArea.setBorder(emptyBorder);
-        //secondPanel.add(Box.createVerticalStrut(15));
-        secondPanel.add(this.textArea);
+        this.mineCounterTextArea = new JTextArea(String.valueOf(this.numberOfRemainingMines));
+        this.mineCounterTextArea.setEditable(false);
+        this.mineCounterTextArea.setFocusable(false);
+        this.mineCounterTextArea.setFont(new Font("Arial", Font.BOLD, 30));
+        this.mineCounterTextArea.setBackground(secondPanel.getBackground());
+        Border mineCounterEmptyBorder = BorderFactory.createEmptyBorder(17, 25, 0, 0);
+        this.mineCounterTextArea.setBorder(mineCounterEmptyBorder);
+        secondPanel.add(this.mineCounterTextArea);
+
+        this.timerTextArea = new JTextArea(String.valueOf(0));//FIXME: emancipate timer from mineCounter
+        this.timerTextArea.setEditable(false);
+        this.timerTextArea.setFocusable(false);
+        this.timerTextArea.setFont(new Font("Arial", Font.BOLD, 30));
+        this.timerTextArea.setBackground(secondPanel.getBackground());
+        Border timerEmptyBorder = BorderFactory.createEmptyBorder(17, this.xCords * 50 - 160, 0, 0);
+        this.timerTextArea.setBorder(timerEmptyBorder);
+        secondPanel.add(this.timerTextArea);
 
         this.frame.pack();
         this.frame.setResizable(false);
@@ -262,12 +272,60 @@ public class Window{
     public void updateMineCounter(boolean plusOrMinus) {
         if (plusOrMinus) {
             this.numberOfRemainingMines ++;
-            textArea.setText(String.valueOf(this.numberOfRemainingMines));
+            mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
         }else {
             this.numberOfRemainingMines --;
-            textArea.setText(String.valueOf(this.numberOfRemainingMines));
+            mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
         }
     }
+
+    public void timer() {
+        int delay = 1000; //milliseconds
+        this.timer = new Timer(delay, new ActionListener() {
+            int secondsPassed = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent z) {
+                if (secondsPassed < 999 && !gameIsFinished) {
+                    secondsPassed++;
+                    updateTimer(secondsPassed);
+                }else{
+                    timer.stop();
+                }
+            }
+        });
+        this.timer.start();
+    }
+
+    public void updateTimer(int secondsPassed){
+        timerTextArea.setText(String.valueOf(secondsPassed));
+    }
+
+    public void keyboardListener(){
+        this.frame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent x) {
+                System.out.println("a");
+            }
+
+            @Override
+            public void keyPressed(KeyEvent x) {
+                // Invoked when a key is pressed
+                int keyCode = x.getKeyCode();
+                System.out.println("b");
+                if (keyCode == KeyEvent.VK_R) {
+                    System.out.println("c");
+                    resetter();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent x) {
+                System.out.println("d");
+            }
+        });
+    }
+
 
     public void mouseListener() {
         for (int x = 0; x < this.xCords; x++) {
@@ -330,6 +388,11 @@ public class Window{
                         }
 
                         if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) {
+                            if(!timerHasBeenStarted){
+                                timer();
+                                timerHasBeenStarted = true;
+                            }
+
                             if (button.getText().isEmpty()) {
                                 tileRevealer(ax, ay);
                             }else{
@@ -381,11 +444,13 @@ public class Window{
     }
 
     public void setUpLoseCGUI(){
+        frame.setTitle("Press R to restart");
         EndGameWindow loseWindow = new EndGameWindow(250, 105, "You lost");
         loseWindow.setUpGUI();
     }
 
     public void setUpWinGUI(){
+        frame.setTitle("Press R to restart");
         EndGameWindow winWindow = new EndGameWindow(250, 105, "You won");
         winWindow.setUpGUI();
     }
@@ -605,5 +670,11 @@ public class Window{
                 //System.out.println("Error: " + hh.getMessage);
             }
         }
+    }
+
+    public void resetter(){
+        this.frame.dispose();
+
+        Main.main(new String[]{});
     }
 }

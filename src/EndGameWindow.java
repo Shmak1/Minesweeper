@@ -20,15 +20,12 @@ public class EndGameWindow {
     public void setUpGUI() {
         this.frame = new JFrame();
         this.frame.setSize(this.windowWidth, this.windowHeight);
-        //TODO: DONE zmazat java ikonku v rohu
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setUndecorated(true);
         this.frame.setAlwaysOnTop(true);
 
-        //this.textArea = new JTextArea("\n        You lost");
         this.textArea = new JTextArea("\n        " + this.windowText);
         this.textArea.setEditable(false);
-        //this.textArea.setSize(this.windowWidth, this.windowHeight);
         this.textArea.setFocusable(false);
         this.textArea.setFont(new Font("Arial", Font.BOLD, 30));
 
