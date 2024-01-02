@@ -10,19 +10,21 @@ public class Window{
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
-    private JButton[][] buttons;//[0][0] je v lavom hornom rohu
+    private JButton[][] buttons;//[0][0] is the upper left corner
     private JTextArea mineCounterTextArea;
     private JTextArea timerTextArea;
     private Timer timer;
     private int numberOfMines;
     private int numberOfRemainingMines;
-    private int xCords;//pocet tlacidiel na vysku
-    private int yCords;//pocet tlacidiel na sirku
+    private int xCords;//number of buttons on the x axis
+    private int yCords;//number of buttons on the y axis
     private boolean[][] bombPlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsFinished = false;
     private boolean timerHasBeenStarted = false;
+    private EndGameWindow loseWindow;
+    private EndGameWindow winWindow;
 
     public Window(int width, int height, int xCords, int yCords, int numberOfMines) {
         this.windowWidth = width;
@@ -211,7 +213,7 @@ public class Window{
         }
     }
 
-    public void characterArrayer(){
+    public void characterArrayer() {
         this.characterPlacement = new String[this.xCords][this.yCords];
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
@@ -297,31 +299,20 @@ public class Window{
         this.timer.start();
     }
 
-    public void updateTimer(int secondsPassed){
+    public void updateTimer(int secondsPassed) {
         timerTextArea.setText(String.valueOf(secondsPassed));
     }
 
     public void keyboardListener(){
-        this.frame.addKeyListener(new KeyListener() {
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
-            public void keyTyped(KeyEvent x) {
-                System.out.println("a");
-            }
-
-            @Override
-            public void keyPressed(KeyEvent x) {
-                // Invoked when a key is pressed
-                int keyCode = x.getKeyCode();
-                System.out.println("b");
-                if (keyCode == KeyEvent.VK_R) {
-                    System.out.println("c");
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_R) {
                     resetter();
+                    return true;
+                } else {
+                    return false;
                 }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent x) {
-                System.out.println("d");
             }
         });
     }
@@ -346,12 +337,12 @@ public class Window{
 
                                 flagPlacement[ax][ay] = true;
 
-                                if (Arrays.deepEquals(flagPlacement, bombPlacement)){
+                                if (Arrays.deepEquals(flagPlacement, bombPlacement)) {
                                     setUpWinGUI();
                                     gameIsFinished = true;
                                 }
 
-                            }else if(!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())){//right click when there is already a flag, but there is a character under it
+                            }else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {//right click when there is already a flag, but there is a character under it
                                 if (button.getText().equals("\uF04F")) {
                                     updateMineCounter(true);
                                 }
@@ -360,7 +351,7 @@ public class Window{
 
                                 flagPlacement[ax][ay] = false;
 
-//                                switch(characterPlacement){//VERY POSSIBLY REDUNDANT CODE
+//                                switch (characterPlacement) {//VERY POSSIBLY REDUNDANT CODE
 //                                    case "1": button.setForeground(ButtonCharacters.ONE.getColor());
 //                                        break;
 //                                    case "2": button.setForeground(ButtonCharacters.TWO.getColor());
@@ -388,15 +379,15 @@ public class Window{
                         }
 
                         if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) {
-                            if(!timerHasBeenStarted){
+                            if (!timerHasBeenStarted) {
                                 timer();
                                 timerHasBeenStarted = true;
                             }
 
                             if (button.getText().isEmpty()) {
                                 tileRevealer(ax, ay);
-                            }else{
-                                switch (characterPlacement){
+                            }else {
+                                switch (characterPlacement) {
                                     case "1":   button.setForeground(ButtonCharacters.ONE.getColor());
                                                 button.setBackground(Color.LIGHT_GRAY);
                                         break;
@@ -443,24 +434,24 @@ public class Window{
         }
     }
 
-    public void setUpLoseCGUI(){
+    public void setUpLoseCGUI() {
         frame.setTitle("Press R to restart");
-        EndGameWindow loseWindow = new EndGameWindow(250, 105, "You lost");
-        loseWindow.setUpGUI();
+        this.loseWindow = new EndGameWindow(250, 105, "You lost");
+        this.loseWindow.setUpGUI();
     }
 
-    public void setUpWinGUI(){
+    public void setUpWinGUI() {
         frame.setTitle("Press R to restart");
-        EndGameWindow winWindow = new EndGameWindow(250, 105, "You won");
-        winWindow.setUpGUI();
+        this.winWindow = new EndGameWindow(250, 105, "You won");
+        this.winWindow.setUpGUI();
     }
 
-    public void tileRevealer(int x, int y){
+    public void tileRevealer(int x, int y) {
         if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
             try {
                 this.tileRevealer(x - 1, y - 1);
                 this.buttons[x - 1][y - 1].setBackground(Color.LIGHT_GRAY);
-                switch (this.buttons[x - 1][y - 1].getText()){
+                switch (this.buttons[x - 1][y - 1].getText()) {
                     case "1": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x - 1][y - 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -480,14 +471,14 @@ public class Window{
                     default: break;
                 }
 
-            }catch (ArrayIndexOutOfBoundsException aa){
+            }catch (ArrayIndexOutOfBoundsException aa) {
                 //System.out.println("Error: " + aa.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y);
                 this.buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x - 1][y]){
+                switch (characterPlacement[x - 1][y]) {
                     case "1": this.buttons[x - 1][y].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x - 1][y].setForeground(ButtonCharacters.TWO.getColor());
@@ -506,14 +497,14 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException bb){
+            }catch (ArrayIndexOutOfBoundsException bb) {
                 //System.out.println("Error: " + bb.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y + 1);
                 this.buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x - 1][y + 1]){
+                switch (characterPlacement[x - 1][y + 1]) {
                     case "1": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -532,14 +523,14 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException cc){
+            }catch (ArrayIndexOutOfBoundsException cc) {
                 //System.out.println("Error: " + cc.getMessage);
             }
 
             try {
                 this.tileRevealer(x, y - 1);
                 this.buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x][y - 1]){
+                switch (characterPlacement[x][y - 1]) {
                     case "1": this.buttons[x][y - 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x][y - 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -558,7 +549,7 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException dd){
+            }catch (ArrayIndexOutOfBoundsException dd) {
                 //System.out.println("Error: " + dd.getMessage);
             }
 
@@ -568,7 +559,7 @@ public class Window{
             try {
                 this.tileRevealer(x, y + 1);
                 this.buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x][y + 1]){
+                switch (characterPlacement[x][y + 1]) {
                     case "1": this.buttons[x][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -587,14 +578,14 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException ee){
+            }catch (ArrayIndexOutOfBoundsException ee) {
                 //System.out.println("Error: " + ee.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y - 1);
                 this.buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y - 1]){
+                switch (characterPlacement[x + 1][y - 1]) {
                     case "1": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -613,14 +604,14 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException ff){
+            }catch (ArrayIndexOutOfBoundsException ff) {
                 //System.out.println("Error: " + ff.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y);
                 this.buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y]){
+                switch (characterPlacement[x + 1][y]) {
                     case "1": this.buttons[x + 1][y].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y].setForeground(ButtonCharacters.TWO.getColor());
@@ -639,14 +630,14 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException gg){
+            }catch (ArrayIndexOutOfBoundsException gg) {
                 //System.out.println("Error: " + gg.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y + 1);
                 this.buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y + 1]){
+                switch (characterPlacement[x + 1][y + 1]) {
                     //case "": break;
                     case "1": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
@@ -666,14 +657,26 @@ public class Window{
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException hh){
+            }catch (ArrayIndexOutOfBoundsException hh) {
                 //System.out.println("Error: " + hh.getMessage);
             }
         }
     }
 
-    public void resetter(){
+    public void resetter() {
         this.frame.dispose();
+
+        try {
+            this.loseWindow.disposeFrame();
+        } catch (NullPointerException e) {
+
+        }
+
+        try {
+            this.winWindow.disposeFrame();
+        } catch (NullPointerException e) {
+
+        }
 
         Main.main(new String[]{});
     }

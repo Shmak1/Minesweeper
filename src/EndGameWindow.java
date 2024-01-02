@@ -1,19 +1,16 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 public class EndGameWindow {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
     private JTextArea textArea;
-    private boolean hasAlreadyBeenSetUp = false;
     private String windowText;
 
-    public EndGameWindow(int w, int h, String text){
-        this.windowWidth = w;
-        this.windowHeight = h;
+    public EndGameWindow(int width, int height, String text) {
+        this.windowWidth = width;
+        this.windowHeight = height;
         this.windowText = text;
     }
 
@@ -36,5 +33,9 @@ public class EndGameWindow {
         //this.frame.validate();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
+    }
+
+    public void disposeFrame(){
+        this.frame.dispose();
     }
 }

@@ -19,33 +19,16 @@ public enum ButtonCharacters {
     private String character;
     private Color color;
 
-    ButtonCharacters(String character, Color color){
+    ButtonCharacters(String character, Color color) {
         this.character = character;
         this.color = color;
     }
 
-//    public String getCharacterKeyWord(){
-//        switch (this.character){
-//            case "": return "EMPTY";
-//            case "1": return "ONE";
-//            case "2": return "TWO";
-//            case "3": return "THREE";
-//            case "4": return "FOUR";
-//            case "5": return "FIVE";
-//            case "6": return "SIX";
-//            case "7": return "SEVEN";
-//            case "8": return "EIGHT";
-//            case "\uF04F": return "FLAG";
-//            case "\uF04D": return "BOMB";
-//            default: return "";
-//        }
-//    }
-
-    public String getCharacter(){
+    public String getCharacter() {
         return this.character;
     }
 
-    public Color getColor(){
+    public Color getColor() {
         return this.color;
     }
 }
