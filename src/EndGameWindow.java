@@ -28,9 +28,7 @@ public class EndGameWindow {
 
         this.frame.add(textArea);
 
-        //this.frame.pack();
         this.frame.setResizable(false);
-        //this.frame.validate();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
     }

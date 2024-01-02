@@ -134,7 +134,7 @@ public class StartingWindow {
 
                     frame.dispose();
 
-                    if (gameWidthInt < 4 || gameHeightInt < 4 || numberOfMinesInt > (gameWidthInt * gameHeightInt)){
+                    if (gameWidthInt < 4 || gameWidthInt > 50 || gameHeightInt < 4 || gameHeightInt > 50 || numberOfMinesInt > (gameWidthInt * gameHeightInt)){
                         gameWidthInt = 9;
                         gameHeightInt = 9;
                         numberOfMinesInt = 10;

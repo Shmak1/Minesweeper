@@ -23,6 +23,7 @@ public class Window{
     private String[][] characterPlacement;
     private boolean gameIsFinished = false;
     private boolean timerHasBeenStarted = false;
+    private boolean startingWindowCannotBeCreated = false;
     private EndGameWindow loseWindow;
     private EndGameWindow winWindow;
 
@@ -206,8 +207,8 @@ public class Window{
     public void tileHider() {
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                this.buttons[x][y].setForeground(ButtonCharacters.FOREGROUND.getColor());//
-                this.buttons[x][y].setBackground(ButtonCharacters.BACKGROUND.getColor());//defaultne menit farbu
+                this.buttons[x][y].setForeground(ButtonCharacters.FOREGROUND.getColor());
+                this.buttons[x][y].setBackground(ButtonCharacters.BACKGROUND.getColor());
                 this.buttons[x][y].setFocusPainted(false);
             }
         }
@@ -266,7 +267,6 @@ public class Window{
 
         this.frame.pack();
         this.frame.setResizable(false);
-        //this.frame.validate();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
     }
@@ -288,11 +288,11 @@ public class Window{
 
             @Override
             public void actionPerformed(ActionEvent z) {
-                if (secondsPassed < 999 && !gameIsFinished) {
+                if (secondsPassed >= 999 || gameIsFinished) {
+                    timer.stop();
+                }else{
                     secondsPassed++;
                     updateTimer(secondsPassed);
-                }else{
-                    timer.stop();
                 }
             }
         });
@@ -307,10 +307,11 @@ public class Window{
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_R) {
+                if (e.getKeyCode() == KeyEvent.VK_R && !startingWindowCannotBeCreated) {
                     resetter();
                     return true;
                 } else {
+                    startingWindowCannotBeCreated = true;
                     return false;
                 }
             }
@@ -346,31 +347,9 @@ public class Window{
                                 if (button.getText().equals("\uF04F")) {
                                     updateMineCounter(true);
                                 }
-
                                 button.setText(characterPlacement);
 
                                 flagPlacement[ax][ay] = false;
-
-//                                switch (characterPlacement) {//VERY POSSIBLY REDUNDANT CODE
-//                                    case "1": button.setForeground(ButtonCharacters.ONE.getColor());
-//                                        break;
-//                                    case "2": button.setForeground(ButtonCharacters.TWO.getColor());
-//                                        break;
-//                                    case "3": button.setForeground(ButtonCharacters.THREE.getColor());
-//                                        break;
-//                                    case "4": button.setForeground(ButtonCharacters.FOUR.getColor());
-//                                        break;
-//                                    case "5": button.setForeground(ButtonCharacters.FIVE.getColor());
-//                                        break;
-//                                    case "6": button.setForeground(ButtonCharacters.SIX.getColor());
-//                                        break;
-//                                    case "7": button.setForeground(ButtonCharacters.SEVEN.getColor());
-//                                        break;
-//                                    case "8": button.setForeground(ButtonCharacters.EIGHT.getColor());
-//                                        break;
-//                                    case "\uF04D": button.setForeground(ButtonCharacters.BOMB.getColor());
-//                                        break;
-//                                }
                             }else {
                                 button.setText(characterPlacement);
                                 button.setForeground(ButtonCharacters.FOREGROUND.getColor());
@@ -554,7 +533,6 @@ public class Window{
             }
 
             this.buttons[x][y].setBackground(Color.LIGHT_GRAY);
-            ///////////////////////////////////////////////////
 
             try {
                 this.tileRevealer(x, y + 1);
@@ -638,7 +616,6 @@ public class Window{
                 this.tileRevealer(x + 1, y + 1);
                 this.buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
                 switch (characterPlacement[x + 1][y + 1]) {
-                    //case "": break;
                     case "1": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -677,6 +654,8 @@ public class Window{
         } catch (NullPointerException e) {
 
         }
+
+        this.startingWindowCannotBeCreated = false;
 
         Main.main(new String[]{});
     }
