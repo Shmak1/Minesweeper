@@ -12,11 +12,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="R works as a reset button, the thing is, it works way better as a fork bomb">
+    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="removed R fork bomb potential">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EndGameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/EndGameWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/StartingWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/StartingWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,7 +165,7 @@
       <workItem from="1703966053917" duration="9153000" />
       <workItem from="1704052246752" duration="11435000" />
       <workItem from="1704149850729" duration="10929000" />
-      <workItem from="1704211869919" duration="11207000" />
+      <workItem from="1704211869919" duration="13370000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />
@@ -264,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704219756424</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="removed R fork bomb potential">
+      <option name="closed" value="true" />
+      <created>1704231532715</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1704231532715</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,7 +304,8 @@
     <MESSAGE value="fixed flag counter miscounting when removing flags off of buttons that were clicked by tileRevealer()" />
     <MESSAGE value="i dont even remember what i fixed, i just know that the top cp needs fixing and that the keyboard input just does not work properly" />
     <MESSAGE value="R works as a reset button, the thing is, it works way better as a fork bomb" />
-    <option name="LAST_COMMIT_MESSAGE" value="R works as a reset button, the thing is, it works way better as a fork bomb" />
+    <MESSAGE value="removed R fork bomb potential" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed R fork bomb potential" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Main_java$Main.ic" NAME="Main Coverage Results" MODIFIED="1700464728779" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

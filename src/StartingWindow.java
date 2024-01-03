@@ -1,5 +1,3 @@
-//TODO: add filter for textFields for numbers only
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
