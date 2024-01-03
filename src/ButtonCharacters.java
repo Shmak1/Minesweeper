@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public enum ButtonCharacters {
+public enum ButtonCharacters {  //This enum stores Strings and Colors of all possible characters is the game.
 
     EMPTY("", Color.WHITE),
     BACKGROUND("", Color.decode("#7B7B7B")),
@@ -24,11 +24,11 @@ public enum ButtonCharacters {
         this.color = color;
     }
 
-    public String getCharacter() {
+    public String getCharacter() {  //Method that returns a character.
         return this.character;
     }
 
-    public Color getColor() {
+    public Color getColor() {   //Method that returns a characters color.
         return this.color;
     }
 }

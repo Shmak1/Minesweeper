@@ -6,24 +6,24 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-public class Window{
+public class Window {   //This class takes care of the main game window and its functions.
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
-    private JButton[][] buttons;//[0][0] is the upper left corner
+    private JButton[][] buttons;    //[0][0] is the upper left corner
     private JTextArea mineCounterTextArea;
     private JTextArea timerTextArea;
     private Timer timer;
     private int numberOfMines;
     private int numberOfRemainingMines;
-    private int xCords;//number of buttons on the x axis
-    private int yCords;//number of buttons on the y axis
-    private boolean[][] bombPlacement;
+    private int xCords; //number of buttons on the x axis
+    private int yCords; //number of buttons on the y axis
+    private boolean[][] minePlacement;
     private boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsFinished = false;
     private boolean timerHasBeenStarted = false;
-    private boolean startingWindowCannotBeCreated = false;
+    private boolean startingWindowCannotBeCreated = false;  //variable used to make sure that starting window can be created only once every reset
     private EndGameWindow loseWindow;
     private EndGameWindow winWindow;
 
@@ -35,7 +35,7 @@ public class Window{
         this.numberOfMines = numberOfMines;
         this.numberOfRemainingMines = this.numberOfMines;
 
-        final Dimension buttonSize = new Dimension(50, 50);
+        final Dimension buttonSize = new Dimension(50, 50); //Size of a button, any lower and text stops displaying
 
         this.buttons = new JButton[this.xCords][this.yCords];
         this.flagPlacement = new boolean[this.xCords][this.yCords];
@@ -53,10 +53,10 @@ public class Window{
         }
     }
 
-    public void bombPlacer() { //Metoda na nahodne rozmiestnenie min/bomb do JButtonov
+    public void minePlacer() {  //Method that randomly places selected number of mines inside the button grid
         int randIntX;
         int randIntY;
-        this.bombPlacement = new boolean[xCords][yCords];
+        this.minePlacement = new boolean[xCords][yCords];
 
         Random rand = new Random();
 
@@ -66,20 +66,20 @@ public class Window{
 
             if (this.buttons[randIntX][randIntY].getText().isEmpty()) {
                 this.buttons[randIntX][randIntY].setText("\uF04D");
-                this.bombPlacement[randIntX][randIntY] = true;
+                this.minePlacement[randIntX][randIntY] = true;
             } else {
                 i--;
             }
         }
     }
 
-    public void numberPlacer() { //Metoda na rozmiestnenie cisel do JButtonov okolo JButtonov obsahujucich znak bomby
-        int buttonNumber;
-        String buttonText;
+    public void numberPlacer() {    //Method that places numbers inside buttons that have a mine/mines around them, it works by iterating through all the buttons
+        int buttonNumber;           //and if the button coordinates match the minePlacement coordinates, it adds 1 to every tile around it that is NOT a mine,
+        String buttonText;          //try catch blocks prevent the code from stepping out of the array.
 
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                if (this.bombPlacement[x][y]) {
+                if (this.minePlacement[x][y]) {
                     try {
                         if (!this.buttons[x - 1][y - 1].getText().equals("\uF04D")) { //if the button does NOT contain a bomb
                             if (this.buttons[x - 1][y - 1].getText().isEmpty()) {
@@ -96,7 +96,7 @@ public class Window{
                     }
 
                     try {
-                        if (!this.buttons[x - 1][y].getText().equals("\uF04D")) {   //if the button does NOT contain a bomb
+                        if (!this.buttons[x - 1][y].getText().equals("\uF04D")) {
                             if (this.buttons[x - 1][y].getText().isEmpty()) {
                                 this.buttons[x - 1][y].setText("1");
                             } else {
@@ -204,7 +204,7 @@ public class Window{
         }
     }
 
-    public void tileHider() {
+    public void tileHider() {   //Method that hides the text inside the tiles by making the FOREGROUND and the BACKGROUND the same color.
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
                 this.buttons[x][y].setForeground(ButtonCharacters.FOREGROUND.getColor());
@@ -214,7 +214,7 @@ public class Window{
         }
     }
 
-    public void characterArrayer() {
+    public void characterArrayer() {    //Method that puts all the characters inside the tiles into an array.
         this.characterPlacement = new String[this.xCords][this.yCords];
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
@@ -223,7 +223,7 @@ public class Window{
         }
     }
 
-    public void setUpGUI() {
+    public void setUpGUI() {    //Method that creates the main window with all of its components.
         this.frame = new JFrame();
         this.frame.setSize(this.windowWidth, this.windowHeight);
         this.frame.setTitle("Minesweeper");
@@ -256,7 +256,7 @@ public class Window{
         this.mineCounterTextArea.setBorder(mineCounterEmptyBorder);
         secondPanel.add(this.mineCounterTextArea);
 
-        this.timerTextArea = new JTextArea(String.valueOf(0));//FIXME: emancipate timer from mineCounter
+        this.timerTextArea = new JTextArea(String.valueOf(0)); //FIXME: emancipate timer from mineCounter
         this.timerTextArea.setEditable(false);
         this.timerTextArea.setFocusable(false);
         this.timerTextArea.setFont(new Font("Arial", Font.BOLD, 30));
@@ -271,7 +271,7 @@ public class Window{
         this.frame.setVisible(true);
     }
 
-    public void updateMineCounter(boolean plusOrMinus) {
+    public void updateMineCounter(boolean plusOrMinus) {    //Method that updates the mineCounter textArea every time a flag is placed or picked up.
         if (plusOrMinus) {
             this.numberOfRemainingMines ++;
             mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
@@ -281,7 +281,7 @@ public class Window{
         }
     }
 
-    public void timer() {
+    public void timer() {   //Method that counts from 0 to 999 seconds from the first interaction to the game end.
         int delay = 1000; //milliseconds
         this.timer = new Timer(delay, new ActionListener() {
             int secondsPassed = 0;
@@ -299,11 +299,11 @@ public class Window{
         this.timer.start();
     }
 
-    public void updateTimer(int secondsPassed) {
+    public void updateTimer(int secondsPassed) {    //Method that updates the timer textArea every second
         timerTextArea.setText(String.valueOf(secondsPassed));
     }
 
-    public void keyboardListener(){
+    public void keyboardListener(){ //Method that waits for the player to press the 'R' key. When the key is pressed, it calls the resetter() method that resets the game.
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
@@ -318,8 +318,7 @@ public class Window{
         });
     }
 
-
-    public void mouseListener() {
+    public void mouseListener() {   //Method that allows the player to interact with the buttons by left/right-clicking and afterward takes care of handling the changes accompanying the interaction.
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
                 JButton button = this.buttons[x][y];
@@ -329,8 +328,8 @@ public class Window{
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {//right click
-                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {//right click when there is no flag placed
+                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {  //right-click
+                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {  //right-click when there is no flag placed
                                 button.setText(ButtonCharacters.FLAG.getCharacter());
                                 button.setForeground(ButtonCharacters.FLAG.getColor());
 
@@ -338,12 +337,12 @@ public class Window{
 
                                 flagPlacement[ax][ay] = true;
 
-                                if (Arrays.deepEquals(flagPlacement, bombPlacement)) {
+                                if (Arrays.deepEquals(flagPlacement, minePlacement)) {
                                     setUpWinGUI();
                                     gameIsFinished = true;
                                 }
 
-                            }else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {//right click when there is already a flag, but there is a character under it
+                            }else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) { //right-click when there is already a flag, but there is a character under it
                                 if (button.getText().equals("\uF04F")) {
                                     updateMineCounter(true);
                                 }
@@ -357,7 +356,7 @@ public class Window{
                             }
                         }
 
-                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) {
+                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) { //left-click
                             if (!timerHasBeenStarted) {
                                 timer();
                                 timerHasBeenStarted = true;
@@ -397,7 +396,7 @@ public class Window{
 
                                                     for (int xx = 0; xx < xCords; xx++) {
                                                         for (int yy = 0; yy < yCords; yy++) {
-                                                            if (bombPlacement[xx][yy]) {
+                                                            if (minePlacement[xx][yy]) {
                                                                 buttons[xx][yy].setForeground(Color.BLACK);
                                                                 buttons[xx][yy].setBackground(Color.LIGHT_GRAY);
                                                             }
@@ -413,19 +412,21 @@ public class Window{
         }
     }
 
-    public void setUpLoseCGUI() {
+    public void setUpLoseCGUI() {   //Method that creates a window after the player has clicked on a mine
         frame.setTitle("Press R to restart");
         this.loseWindow = new EndGameWindow(250, 105, "You lost");
         this.loseWindow.setUpGUI();
     }
 
-    public void setUpWinGUI() {
+    public void setUpWinGUI() { //Method that creates a window after the player has placed all the flags on the correctly
         frame.setTitle("Press R to restart");
         this.winWindow = new EndGameWindow(250, 105, "You won");
         this.winWindow.setUpGUI();
     }
 
-    public void tileRevealer(int x, int y) {
+    public void tileRevealer(int x, int y) {    //Method that reveals empty tiles and one tile further. It works by going around the clicked button and revealing all the empty tiles and afterward recursively
+                                                //calling itself 2 tiles away from the original tile in 8 directions(↑,↓,←,→,↖,↗,↘,↙). The try-catch blocks are there so that the method does NOT step out of the array.
+                                                //For further reference look at "Stuff/bomb count alg.txt"
         if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
             try {
                 this.tileRevealer(x - 1, y - 1);
@@ -640,7 +641,7 @@ public class Window{
         }
     }
 
-    public void resetter() {
+    public void resetter() {    //Method that deletes all the windows and releases their resources. Afterward it calls main so that the whole program can start again.
         this.frame.dispose();
 
         try {

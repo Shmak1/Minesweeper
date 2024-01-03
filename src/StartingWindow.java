@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class StartingWindow {
+public class StartingWindow {   //This class takes care of the starting window, its functions and the saving of user input.
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
@@ -44,7 +44,7 @@ public class StartingWindow {
         this.button.setFocusable(false);
     }
 
-    public void setUpStartingWindow() {
+    public void setUpStartingWindow() { //Method that creates the starting window and all of its components.
         int maxCharacters = 3;
         this.gameWidth = new JTextField(2);
         this.gameWidth.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -123,7 +123,8 @@ public class StartingWindow {
         this.mouseListener();
     }
 
-    public void mouseListener() {
+    public void mouseListener() {   //Method that waits for the player to press the "Start button". After it is pressed, if any of the inputs are outside the pre-set boundaries,
+                                    //it defaults all the variables to 9, 9, 10.
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -138,20 +139,21 @@ public class StartingWindow {
                         numberOfMinesInt = 10;
                     }
 
-                    Window window = new Window(1920, 1080, gameWidthInt, gameHeightInt, numberOfMinesInt);//Vytvorenie okna, teoreticke maximum: x, y, 200, 200, 4000; hratelne maximum: x, y, 50, 50, 500
-                    window.bombPlacer();//Polozenie bomb na hraciu plochu
-                    window.numberPlacer();//Zapisanie cisel okolo bomb
-                    window.tileHider();//Skrytie vsetkych znakov, kontrolna metoda
-                    window.characterArrayer();//Ulozenie vsetkych znakov z tlacidiel do pola
-                    window.mouseListener();//Citanie vstupov mysou
-                    window.setUpGUI();//Nastavenie a zobrazenie okna
+                    Window window = new Window(1920, 1080, gameWidthInt, gameHeightInt, numberOfMinesInt);//Theoretical maximum: x, y, 200, 200, 4000; Playable maximum: x, y, 50, 50, 500
+                    window.minePlacer();
+                    window.numberPlacer();
+                    window.tileHider();
+                    window.characterArrayer();
+                    window.mouseListener();
+                    window.setUpGUI();
                     window.keyboardListener();
                 }
             }
         });
     }
 
-    public void saveGameGenerationInput() {
+    public void saveGameGenerationInput() { //Method that saves all the text and converts it to proper numbers after the player presses the "Start" button.
+                                            //If any of the inputs is NaN(Not A Number) all the numbers get set to the default values(9, 9, 10).
         try {
             this.gameWidthInt = Integer.parseInt(this.gameWidth.getText());
         } catch (NumberFormatException e) {
