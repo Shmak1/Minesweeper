@@ -20,7 +20,7 @@ public class StartingWindow {   //This class takes care of the starting window, 
     private int gameHeightInt;
     private int numberOfMinesInt;
 
-    StartingWindow(int width, int height) {
+    public StartingWindow(int width, int height) {
         this.windowWidth = width;
         this.windowHeight = height;
 
