@@ -321,17 +321,15 @@ public class Window {   //This class takes care of the main game window and its 
     public void mouseListener() {   //Method that allows the player to interact with the buttons by left/right-clicking and afterward takes care of handling the changes accompanying the interaction.
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
-                JButton button = this.buttons[x][y];
                 int ax = x;
                 int ay = y;
-                String characterPlacement = this.characterPlacement[x][y];
-                button.addMouseListener(new MouseAdapter() {
+                Window.this.buttons[ax][ay].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
                         if (SwingUtilities.isRightMouseButton(e) && !Window.this.gameIsFinished) {  //right-click
-                            if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {  //right-click when there is no flag placed
-                                button.setText(ButtonCharacters.FLAG.getCharacter());
-                                button.setForeground(ButtonCharacters.FLAG.getColor());
+                            if (!Window.this.buttons[ax][ay].getText().equals("\uF04F") && Window.this.buttons[ax][ay].getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {  //right-click when there is no flag placed
+                                Window.this.buttons[ax][ay].setText(ButtonCharacters.FLAG.getCharacter());
+                                Window.this.buttons[ax][ay].setForeground(ButtonCharacters.FLAG.getColor());
 
                                 Window.this.updateMineCounter(false);
 
@@ -342,55 +340,55 @@ public class Window {   //This class takes care of the main game window and its 
                                     Window.this.gameIsFinished = true;
                                 }
 
-                            } else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) { //right-click when there is already a flag, but there is a character under it
-                                if (button.getText().equals("\uF04F")) {
+                            } else if (!Window.this.buttons[ax][ay].getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) { //right-click when there is already a flag, but there is a character under it
+                                if (Window.this.buttons[ax][ay].getText().equals("\uF04F")) {
                                     Window.this.updateMineCounter(true);
                                 }
-                                button.setText(characterPlacement);
+                                Window.this.buttons[ax][ay].setText(Window.this.characterPlacement[ax][ay]);
 
                                 Window.this.flagPlacement[ax][ay] = false;
                             } else {
-                                button.setText(characterPlacement);
-                                button.setForeground(ButtonCharacters.FOREGROUND.getColor());
+                                Window.this.buttons[ax][ay].setText(Window.this.characterPlacement[ax][ay]);
+                                Window.this.buttons[ax][ay].setForeground(ButtonCharacters.FOREGROUND.getColor());
                                 Window.this.updateMineCounter(true);
                             }
                         }
 
-                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !Window.this.gameIsFinished) { //left-click
+                        if (SwingUtilities.isLeftMouseButton(e) && !Window.this.buttons[ax][ay].getText().equals("\uF04F") && !Window.this.gameIsFinished) { //left-click
                             if (!Window.this.timerHasBeenStarted) {
                                 Window.this.timer();
                                 Window.this.timerHasBeenStarted = true;
                             }
 
-                            if (button.getText().isEmpty()) {
+                            if (Window.this.buttons[ax][ay].getText().isEmpty()) {
                                 Window.this.tileRevealer(ax, ay);
                             } else {
-                                switch (characterPlacement) {
-                                    case "1":   button.setForeground(ButtonCharacters.ONE.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                switch (Window.this.characterPlacement[ax][ay]) {
+                                    case "1":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.ONE.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "2":   button.setForeground(ButtonCharacters.TWO.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "2":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.TWO.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "3":   button.setForeground(ButtonCharacters.THREE.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "3":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.THREE.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "4":   button.setForeground(ButtonCharacters.FOUR.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "4":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.FOUR.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "5":   button.setForeground(ButtonCharacters.FIVE.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "5":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.FIVE.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "6":   button.setForeground(ButtonCharacters.SIX.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "6":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.SIX.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "7":   button.setForeground(ButtonCharacters.SEVEN.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "7":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.SEVEN.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "8":   button.setForeground(ButtonCharacters.EIGHT.getColor());
-                                                button.setBackground(Color.LIGHT_GRAY);
+                                    case "8":   Window.this.buttons[ax][ay].setForeground(ButtonCharacters.EIGHT.getColor());
+                                                Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                         break;
-                                    case "\uF04D":  button.setBackground(Color.LIGHT_GRAY);
+                                    case "\uF04D":  Window.this.buttons[ax][ay].setBackground(Color.LIGHT_GRAY);
                                                     Window.this.gameIsFinished = true;
                                                     Window.this.setUpLoseCGUI();
 
