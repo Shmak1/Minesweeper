@@ -165,6 +165,7 @@
       <workItem from="1704211869919" duration="13421000" />
       <workItem from="1704306528283" duration="10327000" />
       <workItem from="1704422823313" duration="220000" />
+      <workItem from="1704423184369" duration="302000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />
@@ -302,7 +303,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704423010394</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Edited the code to fit a required checkstyle and removed an unused class">
+      <option name="closed" value="true" />
+      <created>1704423481221</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1704423481221</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
