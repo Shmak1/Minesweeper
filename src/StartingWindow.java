@@ -20,7 +20,7 @@ public class StartingWindow {   //This class takes care of the starting window, 
     private int gameHeightInt;
     private int numberOfMinesInt;
 
-    StartingWindow(int width, int height) {
+    public StartingWindow(int width, int height) {
         this.windowWidth = width;
         this.windowHeight = height;
 
@@ -51,7 +51,7 @@ public class StartingWindow {   //This class takes care of the starting window, 
         this.gameWidth.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent a) {
-                if (gameWidth.getText().length() >= maxCharacters) {
+                if (StartingWindow.this.gameWidth.getText().length() >= maxCharacters) {
                     a.consume();
                 }
             }
@@ -62,7 +62,7 @@ public class StartingWindow {   //This class takes care of the starting window, 
         this.gameHeight.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent b) {
-                if (gameHeight.getText().length() >= maxCharacters) {
+                if (StartingWindow.this.gameHeight.getText().length() >= maxCharacters) {
                     b.consume();
                 }
             }
@@ -73,7 +73,7 @@ public class StartingWindow {   //This class takes care of the starting window, 
         this.numberOfMines.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent c) {
-                if (numberOfMines.getText().length() >= maxCharacters) {
+                if (StartingWindow.this.numberOfMines.getText().length() >= maxCharacters) {
                     c.consume();
                 }
             }
@@ -125,21 +125,21 @@ public class StartingWindow {   //This class takes care of the starting window, 
 
     public void mouseListener() {   //Method that waits for the player to press the "Start button". After it is pressed, if any of the inputs are outside the pre-set boundaries,
                                     //it defaults all the variables to 9, 9, 10.
-        button.addMouseListener(new MouseAdapter() {
+        this.button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (SwingUtilities.isLeftMouseButton(e)) {
-                    saveGameGenerationInput();
+                    StartingWindow.this.saveGameGenerationInput();
 
-                    frame.dispose();
+                    StartingWindow.this.frame.dispose();
 
-                    if (gameWidthInt < 4 || gameWidthInt > 50 || gameHeightInt < 4 || gameHeightInt > 50 || numberOfMinesInt > (gameWidthInt * gameHeightInt)){
-                        gameWidthInt = 9;
-                        gameHeightInt = 9;
-                        numberOfMinesInt = 10;
+                    if (StartingWindow.this.gameWidthInt < 4 || StartingWindow.this.gameWidthInt > 50 || StartingWindow.this.gameHeightInt < 4 || StartingWindow.this.gameHeightInt > 50 || StartingWindow.this.numberOfMinesInt > (StartingWindow.this.gameWidthInt * StartingWindow.this.gameHeightInt)) {
+                        StartingWindow.this.gameWidthInt = 9;
+                        StartingWindow.this.gameHeightInt = 9;
+                        StartingWindow.this.numberOfMinesInt = 10;
                     }
 
-                    Window window = new Window(1920, 1080, gameWidthInt, gameHeightInt, numberOfMinesInt);//Theoretical maximum: x, y, 200, 200, 4000; Playable maximum: x, y, 50, 50, 500
+                    Window window = new Window(1920, 1080, StartingWindow.this.gameWidthInt, StartingWindow.this.gameHeightInt, StartingWindow.this.numberOfMinesInt);//Theoretical maximum: x, y, 200, 200, 4000; Playable maximum: x, y, 50, 50, 500
                     window.minePlacer();
                     window.numberPlacer();
                     window.tileHider();

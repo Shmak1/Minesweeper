@@ -16,6 +16,7 @@ public class Window {   //This class takes care of the main game window and its 
     private Timer timer;
     private int numberOfMines;
     private int numberOfRemainingMines;
+    private int secondsPassed = 0;
     private int xCords; //number of buttons on the x axis
     private int yCords; //number of buttons on the y axis
     private boolean[][] minePlacement;
@@ -56,7 +57,7 @@ public class Window {   //This class takes care of the main game window and its 
     public void minePlacer() {  //Method that randomly places selected number of mines inside the button grid
         int randIntX;
         int randIntY;
-        this.minePlacement = new boolean[xCords][yCords];
+        this.minePlacement = new boolean[this.xCords][this.yCords];
 
         Random rand = new Random();
 
@@ -273,45 +274,44 @@ public class Window {   //This class takes care of the main game window and its 
 
     public void updateMineCounter(boolean plusOrMinus) {    //Method that updates the mineCounter textArea every time a flag is placed or picked up.
         if (plusOrMinus) {
-            this.numberOfRemainingMines ++;
-            mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
-        }else {
-            this.numberOfRemainingMines --;
-            mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
+            this.numberOfRemainingMines++;
+            this.mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
+        } else {
+            this.numberOfRemainingMines--;
+            this.mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
         }
     }
 
     public void timer() {   //Method that counts from 0 to 999 seconds from the first interaction to the game end.
         int delay = 1000; //milliseconds
         this.timer = new Timer(delay, new ActionListener() {
-            int secondsPassed = 0;
 
             @Override
             public void actionPerformed(ActionEvent z) {
-                if (secondsPassed >= 999 || gameIsFinished) {
-                    timer.stop();
-                }else{
-                    secondsPassed++;
-                    updateTimer(secondsPassed);
+                if (Window.this.secondsPassed >= 999 || Window.this.gameIsFinished) {
+                    Window.this.timer.stop();
+                } else {
+                    Window.this.secondsPassed++;
+                    Window.this.updateTimer(Window.this.secondsPassed);
                 }
             }
         });
-        this.timer.start();
+        Window.this.timer.start();
     }
 
     public void updateTimer(int secondsPassed) {    //Method that updates the timer textArea every second
-        timerTextArea.setText(String.valueOf(secondsPassed));
+        Window.this.timerTextArea.setText(String.valueOf(secondsPassed));
     }
 
-    public void keyboardListener(){ //Method that waits for the player to press the 'R' key. When the key is pressed, it calls the resetter() method that resets the game.
+    public void keyboardListener() { //Method that waits for the player to press the 'R' key. When the key is pressed, it calls the resetter() method that resets the game.
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_R && !startingWindowCannotBeCreated) {
-                    resetter();
+                if (e.getKeyCode() == KeyEvent.VK_R && !Window.this.startingWindowCannotBeCreated) {
+                    Window.this.resetter();
                     return true;
                 } else {
-                    startingWindowCannotBeCreated = true;
+                    Window.this.startingWindowCannotBeCreated = true;
                     return false;
                 }
             }
@@ -328,43 +328,43 @@ public class Window {   //This class takes care of the main game window and its 
                 button.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseReleased(MouseEvent e) {
-                        if (SwingUtilities.isRightMouseButton(e) && !gameIsFinished) {  //right-click
+                        if (SwingUtilities.isRightMouseButton(e) && !Window.this.gameIsFinished) {  //right-click
                             if (!button.getText().equals("\uF04F") && button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) {  //right-click when there is no flag placed
                                 button.setText(ButtonCharacters.FLAG.getCharacter());
                                 button.setForeground(ButtonCharacters.FLAG.getColor());
 
-                                updateMineCounter(false);
+                                Window.this.updateMineCounter(false);
 
-                                flagPlacement[ax][ay] = true;
+                                Window.this.flagPlacement[ax][ay] = true;
 
-                                if (Arrays.deepEquals(flagPlacement, minePlacement)) {
-                                    setUpWinGUI();
-                                    gameIsFinished = true;
+                                if (Arrays.deepEquals(Window.this.flagPlacement, Window.this.minePlacement)) {
+                                    Window.this.setUpWinGUI();
+                                    Window.this.gameIsFinished = true;
                                 }
 
-                            }else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) { //right-click when there is already a flag, but there is a character under it
+                            } else if (!button.getBackground().equals(ButtonCharacters.BACKGROUND.getColor())) { //right-click when there is already a flag, but there is a character under it
                                 if (button.getText().equals("\uF04F")) {
-                                    updateMineCounter(true);
+                                    Window.this.updateMineCounter(true);
                                 }
                                 button.setText(characterPlacement);
 
-                                flagPlacement[ax][ay] = false;
-                            }else {
+                                Window.this.flagPlacement[ax][ay] = false;
+                            } else {
                                 button.setText(characterPlacement);
                                 button.setForeground(ButtonCharacters.FOREGROUND.getColor());
-                                updateMineCounter(true);
+                                Window.this.updateMineCounter(true);
                             }
                         }
 
-                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !gameIsFinished) { //left-click
-                            if (!timerHasBeenStarted) {
-                                timer();
-                                timerHasBeenStarted = true;
+                        if (SwingUtilities.isLeftMouseButton(e) && !button.getText().equals("\uF04F") && !Window.this.gameIsFinished) { //left-click
+                            if (!Window.this.timerHasBeenStarted) {
+                                Window.this.timer();
+                                Window.this.timerHasBeenStarted = true;
                             }
 
                             if (button.getText().isEmpty()) {
-                                tileRevealer(ax, ay);
-                            }else {
+                                Window.this.tileRevealer(ax, ay);
+                            } else {
                                 switch (characterPlacement) {
                                     case "1":   button.setForeground(ButtonCharacters.ONE.getColor());
                                                 button.setBackground(Color.LIGHT_GRAY);
@@ -391,14 +391,14 @@ public class Window {   //This class takes care of the main game window and its 
                                                 button.setBackground(Color.LIGHT_GRAY);
                                         break;
                                     case "\uF04D":  button.setBackground(Color.LIGHT_GRAY);
-                                                    gameIsFinished = true;
-                                                    setUpLoseCGUI();
+                                                    Window.this.gameIsFinished = true;
+                                                    Window.this.setUpLoseCGUI();
 
-                                                    for (int xx = 0; xx < xCords; xx++) {
-                                                        for (int yy = 0; yy < yCords; yy++) {
-                                                            if (minePlacement[xx][yy]) {
-                                                                buttons[xx][yy].setForeground(Color.BLACK);
-                                                                buttons[xx][yy].setBackground(Color.LIGHT_GRAY);
+                                                    for (int xx = 0; xx < Window.this.xCords; xx++) {
+                                                        for (int yy = 0; yy < Window.this.yCords; yy++) {
+                                                            if (Window.this.minePlacement[xx][yy]) {
+                                                                Window.this.buttons[xx][yy].setForeground(Color.BLACK);
+                                                                Window.this.buttons[xx][yy].setBackground(Color.LIGHT_GRAY);
                                                             }
                                                         }
                                                     }
@@ -413,13 +413,13 @@ public class Window {   //This class takes care of the main game window and its 
     }
 
     public void setUpLoseCGUI() {   //Method that creates a window after the player has clicked on a mine
-        frame.setTitle("Press R to restart");
+        this.frame.setTitle("Press R to restart");
         this.loseWindow = new EndGameWindow(250, 105, "You lost");
         this.loseWindow.setUpGUI();
     }
 
     public void setUpWinGUI() { //Method that creates a window after the player has placed all the flags on the correctly
-        frame.setTitle("Press R to restart");
+        this.frame.setTitle("Press R to restart");
         this.winWindow = new EndGameWindow(250, 105, "You won");
         this.winWindow.setUpGUI();
     }
@@ -451,14 +451,14 @@ public class Window {   //This class takes care of the main game window and its 
                     default: break;
                 }
 
-            }catch (ArrayIndexOutOfBoundsException aa) {
+            } catch (ArrayIndexOutOfBoundsException aa) {
                 //System.out.println("Error: " + aa.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y);
                 this.buttons[x - 1][y].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x - 1][y]) {
+                switch (this.characterPlacement[x - 1][y]) {
                     case "1": this.buttons[x - 1][y].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x - 1][y].setForeground(ButtonCharacters.TWO.getColor());
@@ -477,14 +477,14 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException bb) {
+            } catch (ArrayIndexOutOfBoundsException bb) {
                 //System.out.println("Error: " + bb.getMessage);
             }
 
             try {
                 this.tileRevealer(x - 1, y + 1);
                 this.buttons[x - 1][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x - 1][y + 1]) {
+                switch (this.characterPlacement[x - 1][y + 1]) {
                     case "1": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x - 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -503,14 +503,14 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException cc) {
+            } catch (ArrayIndexOutOfBoundsException cc) {
                 //System.out.println("Error: " + cc.getMessage);
             }
 
             try {
                 this.tileRevealer(x, y - 1);
                 this.buttons[x][y - 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x][y - 1]) {
+                switch (this.characterPlacement[x][y - 1]) {
                     case "1": this.buttons[x][y - 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x][y - 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -529,7 +529,7 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException dd) {
+            } catch (ArrayIndexOutOfBoundsException dd) {
                 //System.out.println("Error: " + dd.getMessage);
             }
 
@@ -538,7 +538,7 @@ public class Window {   //This class takes care of the main game window and its 
             try {
                 this.tileRevealer(x, y + 1);
                 this.buttons[x][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x][y + 1]) {
+                switch (this.characterPlacement[x][y + 1]) {
                     case "1": this.buttons[x][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -557,14 +557,14 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException ee) {
+            } catch (ArrayIndexOutOfBoundsException ee) {
                 //System.out.println("Error: " + ee.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y - 1);
                 this.buttons[x + 1][y - 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y - 1]) {
+                switch (this.characterPlacement[x + 1][y - 1]) {
                     case "1": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y - 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -583,14 +583,14 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException ff) {
+            } catch (ArrayIndexOutOfBoundsException ff) {
                 //System.out.println("Error: " + ff.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y);
                 this.buttons[x + 1][y].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y]) {
+                switch (this.characterPlacement[x + 1][y]) {
                     case "1": this.buttons[x + 1][y].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y].setForeground(ButtonCharacters.TWO.getColor());
@@ -609,14 +609,14 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException gg) {
+            } catch (ArrayIndexOutOfBoundsException gg) {
                 //System.out.println("Error: " + gg.getMessage);
             }
 
             try {
                 this.tileRevealer(x + 1, y + 1);
                 this.buttons[x + 1][y + 1].setBackground(Color.LIGHT_GRAY);
-                switch (characterPlacement[x + 1][y + 1]) {
+                switch (this.characterPlacement[x + 1][y + 1]) {
                     case "1": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.ONE.getColor());
                         break;
                     case "2": this.buttons[x + 1][y + 1].setForeground(ButtonCharacters.TWO.getColor());
@@ -635,7 +635,7 @@ public class Window {   //This class takes care of the main game window and its 
                         break;
                     default: break;
                 }
-            }catch (ArrayIndexOutOfBoundsException hh) {
+            } catch (ArrayIndexOutOfBoundsException hh) {
                 //System.out.println("Error: " + hh.getMessage);
             }
         }
@@ -646,13 +646,13 @@ public class Window {   //This class takes care of the main game window and its 
 
         try {
             this.loseWindow.disposeFrame();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
 
         }
 
         try {
             this.winWindow.disposeFrame();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException ignored) {
 
         }
 

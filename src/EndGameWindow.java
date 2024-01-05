@@ -26,7 +26,7 @@ public class EndGameWindow {    //This class takes care of the end game window a
         this.textArea.setFocusable(false);
         this.textArea.setFont(new Font("Arial", Font.BOLD, 30));
 
-        this.frame.add(textArea);
+        this.frame.add(this.textArea);
 
         this.frame.setResizable(false);
         this.frame.setLocationRelativeTo(null);
