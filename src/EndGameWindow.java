@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class EndGameWindow {    //This class takes care of the end game window and its functions.
+/** This class takes care of the end game window and its functions. */
+public class EndGameWindow {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
@@ -13,8 +14,8 @@ public class EndGameWindow {    //This class takes care of the end game window a
         this.windowHeight = height;
         this.windowText = text;
     }
-
-    public void setUpGUI() {    //Method that creates a window with text, based on if the player has lost or won.
+    /** Method that creates a window with text, based on if the player has lost or won. */
+    public void setUpGUI() {
         this.frame = new JFrame();
         this.frame.setSize(this.windowWidth, this.windowHeight);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +34,8 @@ public class EndGameWindow {    //This class takes care of the end game window a
         this.frame.setVisible(true);
     }
 
-    public void disposeFrame() {    //Method that removes the window and releases all of its resources.
+    /** Method that removes the window and releases all of its resources. */
+    public void disposeFrame() {
         this.frame.dispose();
     }
 }

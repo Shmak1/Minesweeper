@@ -5,8 +5,8 @@ import java.awt.event.*;
 import java.util.Arrays;
 import java.util.Random;
 
-
-public class Window {   //This class takes care of the main game window and its functions.
+/** This class takes care of the main game window and its functions. */
+public class Window {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
@@ -54,7 +54,8 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void minePlacer() {  //Method that randomly places selected number of mines inside the button grid
+    /** Method that randomly places selected number of mines inside the button grid */
+    public void minePlacer() {
         int randIntX;
         int randIntY;
         this.minePlacement = new boolean[this.xCords][this.yCords];
@@ -74,9 +75,12 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void numberPlacer() {    //Method that places numbers inside buttons that have a mine/mines around them, it works by iterating through all the buttons
-        int buttonNumber;           //and if the button coordinates match the minePlacement coordinates, it adds 1 to every tile around it that is NOT a mine,
-        String buttonText;          //try catch blocks prevent the code from stepping out of the array.
+    /** Method that places numbers inside buttons that have a mine/mines around them, it works by iterating through all the buttons
+     *  and if the button coordinates match the minePlacement coordinates, it adds 1 to every tile around it that is NOT a mine,
+     *  try catch blocks prevent the code from stepping out of the array. */
+    public void numberPlacer() {
+        int buttonNumber;
+        String buttonText;
 
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
@@ -205,7 +209,8 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void tileHider() {   //Method that hides the text inside the tiles by making the FOREGROUND and the BACKGROUND the same color.
+    /** Method that hides the text inside the tiles by making the FOREGROUND and the BACKGROUND the same color. */
+    public void tileHider() {
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
                 this.buttons[x][y].setForeground(ButtonCharacters.FOREGROUND.getColor());
@@ -224,7 +229,8 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void setUpGUI() {    //Method that creates the main window with all of its components.
+    /** Method that puts all the characters inside the tiles into an array. */
+    public void setUpGUI() {
         this.frame = new JFrame();
         this.frame.setSize(this.windowWidth, this.windowHeight);
         this.frame.setTitle("Minesweeper");
@@ -272,7 +278,8 @@ public class Window {   //This class takes care of the main game window and its 
         this.frame.setVisible(true);
     }
 
-    public void updateMineCounter(boolean plusOrMinus) {    //Method that updates the mineCounter textArea every time a flag is placed or picked up.
+    /** Method that updates the mineCounter textArea every time a flag is placed or picked up. */
+    public void updateMineCounter(boolean plusOrMinus) {
         if (plusOrMinus) {
             this.numberOfRemainingMines++;
             this.mineCounterTextArea.setText(String.valueOf(this.numberOfRemainingMines));
@@ -282,7 +289,8 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void timer() {   //Method that counts from 0 to 999 seconds from the first interaction to the game end.
+    /** Method that counts from 0 to 999 seconds from the first interaction to the game end. */
+    public void timer() {
         int delay = 1000; //milliseconds
         this.timer = new Timer(delay, new ActionListener() {
 
@@ -299,11 +307,13 @@ public class Window {   //This class takes care of the main game window and its 
         Window.this.timer.start();
     }
 
-    public void updateTimer(int secondsPassed) {    //Method that updates the timer textArea every second
+    /** Method that updates the timer textArea every second */
+    public void updateTimer(int secondsPassed) {
         Window.this.timerTextArea.setText(String.valueOf(secondsPassed));
     }
 
-    public void keyboardListener() { //Method that waits for the player to press the 'R' key. When the key is pressed, it calls the resetter() method that resets the game.
+    /** Method that waits for the player to press the 'R' key. When the key is pressed, it calls the resetter() method that resets the game. */
+    public void keyboardListener() {
         KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
@@ -318,7 +328,8 @@ public class Window {   //This class takes care of the main game window and its 
         });
     }
 
-    public void mouseListener() {   //Method that allows the player to interact with the buttons by left/right-clicking and afterward takes care of handling the changes accompanying the interaction.
+    /** Method that allows the player to interact with the buttons by left/right-clicking and afterward takes care of handling the changes accompanying the interaction. */
+    public void mouseListener() {
         for (int x = 0; x < this.xCords; x++) {
             for (int y = 0; y < this.yCords; y++) {
                 int ax = x;
@@ -410,21 +421,24 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void setUpLoseCGUI() {   //Method that creates a window after the player has clicked on a mine
+    /** Method that creates a window after the player has clicked on a mine */
+    public void setUpLoseCGUI() {
         this.frame.setTitle("Press R to restart");
         this.loseWindow = new EndGameWindow(250, 105, "You lost");
         this.loseWindow.setUpGUI();
     }
 
-    public void setUpWinGUI() { //Method that creates a window after the player has placed all the flags on the correctly
+    /** Method that creates a window after the player has placed all the flags on the correctly */
+    public void setUpWinGUI() {
         this.frame.setTitle("Press R to restart");
         this.winWindow = new EndGameWindow(250, 105, "You won");
         this.winWindow.setUpGUI();
     }
 
-    public void tileRevealer(int x, int y) {    //Method that reveals empty tiles and one tile further. It works by going around the clicked button and revealing all the empty tiles and afterward recursively
-                                                //calling itself 2 tiles away from the original tile in 8 directions(↑,↓,←,→,↖,↗,↘,↙). The try-catch blocks are there so that the method does NOT step out of the array.
-                                                //For further reference look at "Stuff/bomb count alg.txt"
+    /** Method that reveals empty tiles and one tile further. It works by going around the clicked button and revealing all the empty tiles and afterward recursively
+     *   calling itself 2 tiles away from the original tile in 8 directions(↑,↓,←,→,↖,↗,↘,↙). The try-catch blocks are there so that the method does NOT step out of the array.
+     *   For further reference look at "Stuff/bomb count alg.txt" */
+    public void tileRevealer(int x, int y) {
         if ((this.buttons[x][y].getText().isEmpty()) && (!this.buttons[x][y].getBackground().equals(Color.LIGHT_GRAY))) {
             try {
                 this.tileRevealer(x - 1, y - 1);
@@ -639,7 +653,8 @@ public class Window {   //This class takes care of the main game window and its 
         }
     }
 
-    public void resetter() {    //Method that deletes all the windows and releases their resources. Afterward it calls main so that the whole program can start again.
+    /** Method that deletes all the windows and releases their resources. Afterward it calls main so that the whole program can start again. */
+    public void resetter() {
         this.frame.dispose();
 
         try {

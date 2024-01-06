@@ -5,14 +5,23 @@
   </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="Minesweeper_v2:jar2" />
+      <artifact name="Minesweeper_v2:jar" />
     </artifacts-to-build>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="Optimizations" />
+    <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="Optimizations">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Minesweeper_v2_jar.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Minesweeper_v2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Minesweeper_v2.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar/Minesweeper_v2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar/Minesweeper_v2.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar2/Minesweeper_v2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +73,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/shmak/Desktop/Minesweeper_v2/bugs/unwinningGame.PNG&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/shmak/Desktop/Minesweeper_v2/out/artifacts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -73,7 +82,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
     &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/shmak/Desktop/Minesweeper_v2/bugs/unwinningGame.PNG&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -95,9 +104,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Minesweeper_v2.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar2/Minesweeper_v2.jar" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JAR Application.Minesweeper_v2.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -166,7 +180,12 @@
       <workItem from="1704306528283" duration="10327000" />
       <workItem from="1704422823313" duration="220000" />
       <workItem from="1704423184369" duration="362000" />
-      <workItem from="1704423631193" duration="640000" />
+      <workItem from="1704423631193" duration="703000" />
+      <workItem from="1704424775680" duration="271000" />
+      <workItem from="1704425193609" duration="628000" />
+      <workItem from="1704425837071" duration="88000" />
+      <workItem from="1704425960310" duration="244000" />
+      <workItem from="1704487798877" duration="1073000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />
@@ -328,7 +347,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704424204697</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Optimizations">
+      <option name="closed" value="true" />
+      <created>1704424285566</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1704424285566</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
