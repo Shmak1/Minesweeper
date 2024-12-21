@@ -25,3 +25,6 @@ podmienkou na zapis do tabulky je vyhrat
 
 score = (100 * numberOfTiles * numberOfMines) / playerTime
 
+////////////////////////////////////////////////////////////////////////
+
+score = 999 * mines / tiles - (999 x time)

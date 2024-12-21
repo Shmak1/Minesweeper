@@ -3,11 +3,11 @@ import java.awt.*;
 
 /** This class takes care of the end game window and its functions. */
 public class EndGameWindow {
-    private int windowWidth;
-    private int windowHeight;
+    private final int windowWidth;
+    private final int windowHeight;
     private JFrame frame;
     private JTextArea textArea;
-    private String windowText;
+    private final String windowText;
 
     public EndGameWindow(int width, int height, String text) {
         this.windowWidth = width;

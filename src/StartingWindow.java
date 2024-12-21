@@ -6,16 +6,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class StartingWindow {   //This class takes care of the starting window, its functions and the saving of user input.
-    private int windowWidth;
-    private int windowHeight;
+    private final int windowWidth;
+    private final int windowHeight;
     private JFrame frame;
     private JTextField gameWidth;
     private JTextField gameHeight;
     private JTextField numberOfMines;
-    private JLabel gameWidthLabel;
-    private JLabel gameHeightLabel;
-    private JLabel numberOfMinesLabel;
-    private JButton button;
+    private final JLabel gameWidthLabel;
+    private final JLabel gameHeightLabel;
+    private final JLabel numberOfMinesLabel;
+    private final JButton button;
     private int gameWidthInt;
     private int gameHeightInt;
     private int numberOfMinesInt;

@@ -17,8 +17,8 @@ public enum ButtonCharacters {
     FLAG("\uF04F", Color.decode("#080808")),
     BOMB("\uF04D", Color.decode("#0000FF"));
 
-    private String character;
-    private Color color;
+    private final String character;
+    private final Color color;
 
     ButtonCharacters(String character, Color color) {
         this.character = character;
