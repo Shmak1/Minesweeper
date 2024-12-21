@@ -7,20 +7,20 @@ import java.util.Random;
 
 /** This class takes care of the main game window and its functions. */
 public class Window {
-    private int windowWidth;
-    private int windowHeight;
+    private final int windowWidth;
+    private final int windowHeight;
     private JFrame frame;
-    private JButton[][] buttons;    //[0][0] is the upper left corner
+    private final JButton[][] buttons;    //[0][0] is the upper left corner
     private JTextArea mineCounterTextArea;
     private JTextArea timerTextArea;
     private Timer timer;
-    private int numberOfMines;
+    private final int numberOfMines;
     private int numberOfRemainingMines;
-    private int secondsPassed = 0;
-    private int xCords; //number of buttons on the x axis
-    private int yCords; //number of buttons on the y axis
+    private int secondsPassed;
+    private final int xCords; //number of buttons on the x-axis
+    private final int yCords; //number of buttons on the y-axis
     private boolean[][] minePlacement;
-    private boolean[][] flagPlacement;
+    private final boolean[][] flagPlacement;
     private String[][] characterPlacement;
     private boolean gameIsFinished = false;
     private boolean timerHasBeenStarted = false;
@@ -35,6 +35,7 @@ public class Window {
         this.yCords = yCords;
         this.numberOfMines = numberOfMines;
         this.numberOfRemainingMines = this.numberOfMines;
+        this.secondsPassed = 0;
 
         final Dimension buttonSize = new Dimension(50, 50); //Size of a button, any lower and text stops displaying
 
@@ -52,6 +53,9 @@ public class Window {
                 this.flagPlacement[x][y] = false;
             }
         }
+
+        HighScore.setNumberOfTiles(this.xCords * this.yCords);
+        HighScore.setNumberOfMines(this.numberOfMines);
     }
 
     /** Method that randomly places selected number of mines inside the button grid */
@@ -433,6 +437,8 @@ public class Window {
         this.frame.setTitle("Press R to restart");
         this.winWindow = new EndGameWindow(250, 105, "You won");
         this.winWindow.setUpGUI();
+        HighScore.setPlayerTime(this.secondsPassed);
+        HighScore.getScore();
     }
 
     /** Method that reveals empty tiles and one tile further. It works by going around the clicked button and revealing all the empty tiles and afterward recursively

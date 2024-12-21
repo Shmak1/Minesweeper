@@ -13,11 +13,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b1314b7-e677-4583-ad5d-bf4278546593" name="Changes" comment="Optimizations">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Minesweeper_v2_jar.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/Stuff/scoreAlg.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HighScore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Minesweeper_v2.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Minesweeper_v2.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar/Minesweeper_v2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar/Minesweeper_v2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Minesweeper_v2_jar2/Minesweeper_v2.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/ButtonCharacters.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/ButtonCharacters.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/EndGameWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/EndGameWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Minesweeper_v2/Window.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Window.java" afterDir="false" />
@@ -44,14 +47,12 @@
     &quot;assignee&quot;: &quot;Shmak1&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="6882ab74-5562-4c08-95bb-bd208c701290" />
-        <option name="url" value="https://github.com/Shmak1/Main.java.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Shmak1/Minesweeper.git&quot;,
+    &quot;accountId&quot;: &quot;6882ab74-5562-4c08-95bb-bd208c701290&quot;
+  }
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -68,16 +69,20 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/shmak/Desktop/Minesweeper_v2/out/artifacts&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
@@ -96,7 +101,7 @@
       <recent name="E:\Uvod_Do_Studia\Minesweeper_v2" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Minesweeper_v2" />
@@ -114,6 +119,14 @@
         <item itemvalue="JAR Application.Minesweeper_v2.jar" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.22562.218" />
+        <option value="bundled-js-predefined-d6986cc7102b-deb605915726-JavaScript-IU-243.22562.218" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -186,6 +199,9 @@
       <workItem from="1704425837071" duration="88000" />
       <workItem from="1704425960310" duration="244000" />
       <workItem from="1704487798877" duration="1073000" />
+      <workItem from="1734639581194" duration="106000" />
+      <workItem from="1734790079510" duration="7997000" />
+      <workItem from="1734800916662" duration="11832000" />
     </task>
     <task id="LOCAL-00001" summary="Changed the SetUpGUI() method to display a bar for future features in the top part of the frame.">
       <option name="closed" value="true" />

@@ -1,0 +1,27 @@
+basePoints = gameHeight * gameWidth;
+
+mineFactor = numberOfMines / (gameHeight * gameWidth);
+
+if (revealedMines < numberOfMines)
+performanceMultiplier = 1 - (revealedMines / numberOfMines);
+else
+performanceMultiplier = 1.5;
+
+score = ((basePoints * mineFactor) / playerTime) * performanceMultiplier;
+
+
+
+
+
+///////////////////////////////////////////////////////
+
+baseScore = 999;
+
+score = (baseScore - currentTime) * (numberOfMines / (x * y));
+
+podmienkou na zapis do tabulky je vyhrat
+
+//////////////////////////////////////////////////////////////////////
+
+score = (100 * numberOfTiles * numberOfMines) / playerTime
+
